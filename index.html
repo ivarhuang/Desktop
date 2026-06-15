@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Avant-Garde Experience · Ver 5.95 (Home Moved to Navbar)</title>
+<style>
+  /* ── 基礎全域設定 ── */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  body { 
+    background: #f3f3f4; 
+    width: 100vw; 
+    overflow-x: hidden; 
+    font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+  }
+  
+  .page-section {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* ── 第一頁：影片首頁 ── */
+  #page-home {
+    background-color: #f3f3f4; 
+    z-index: 10;
+  }
+
+  #video-container {
+    position: absolute; 
+    top: 60px; 
+    left: 0; 
+    width: 100vw; 
+    height: calc(100vh - 60px); 
+    z-index: 5; 
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .scene-vid {
+    max-width: 100%; 
+    max-height: 100%; 
+    display: block;
+    object-fit: contain; 
+  }
+
+  /* ── 頂部高奢懸浮導覽列（全時深色調、純透明） ── */
+  .navbar {
+    position: fixed; top: 0; left: 0; width: 100vw;
+    height: 60px; 
+    padding: 0 5vw; z-index: 100;
+    display: flex; align-items: center; justify-content: flex-end; 
+    background: transparent; 
+  }
+
+  .nav-links {
+    display: flex; gap: 40px; list-style: none;
+    position: absolute; left: 50%; transform: translateX(-50%); 
+  }
+
+  .nav-links a {
+    color: rgba(2, 6, 23, 0.7); 
+    text-decoration: none;
+    font-size: 14px;         
+    font-weight: 600;        
+    letter-spacing: 0.3em;   
+    text-transform: uppercase; 
+    transition: color 0.3s ease;
+  }
+
+  .nav-links a:hover { color: #020617; }
+
+  .nav-btn a {
+    color: #020617; 
+    text-decoration: none;
+    font-size: 12px;         
+    font-weight: 600; 
+    letter-spacing: 0.25em; 
+    text-transform: uppercase;
+    border: 1px solid rgba(2, 6, 23, 0.4); 
+    padding: 10px 24px;       
+    border-radius: 4px; 
+    transition: all 0.3s ease;
+    background: transparent;
+  }
+
+  .nav-btn a:hover { background: #020617; color: #fff; }
+  
+  /* ── 第一頁輪播文字容器 ── */
+  #overlay {
+    position: absolute; top: 60px; left: 0; width: 100%; height: calc(100vh - 60px);
+    z-index: 10; 
+    display: flex; 
+    flex-direction: column;
+    align-items: center;     
+    justify-content: center; 
+    pointer-events: none;
+  }
+  
+  /* 文字保險箱（可透過調整 padding: 0 18vw; 裡面的 18vw 來決定文字左右位置） */
+  #text-box {
+    width: 100%;
+    max-width: 1400px; 
+    padding: 0 1vw;    
+    display: flex;
+    flex-direction: column;   
+    justify-content: flex-start; 
+    align-items: flex-start;   
+    background: transparent;   
+  }
+
+  #scene-label {
+    font-size: 20px; 
+    letter-spacing: 0.4em; text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6); 
+    margin-bottom: 20px; 
+    margin-left: 2px; 
+    transition: opacity 0.4s ease;
+    display: block;
+    text-align: left;    
+  }
+  
+  #main-text {
+    font-size: clamp(30px, 4.5vw, 64px); 
+    font-weight: 900; 
+    color: #a5a6a8; 
+    line-height: 0.95;
+    letter-spacing: -0.04em; 
+    text-transform: uppercase;
+    text-align: left; 
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  /* ── 🛠️ 修改：原本右下角的 .bottom-right-home-box 已經完全移除 ── */
+
+  /* ── 通用優雅淺灰色分頁樣式 ── */
+  .premium-gray-page {
+    background-color: #f3f3f4; 
+    z-index: 9; 
+    display: flex;
+    flex-direction: column;   
+    align-items: center;
+    justify-content: flex-end; 
+  }
+
+  .image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: calc(100vh - 60px); 
+  }
+
+  .large-img {
+    max-width: 98%;  
+    max-height: calc(100vh - 90px); 
+    object-fit: contain; 
+    display: block;
+    margin-bottom: 20px; 
+  }
+
+  #progress { display: none !important; }
+</style>
+</head>
+<body>
+
+<nav id="top-navbar" class="navbar">
+  <ul class="nav-links">
+    <li><a href="#page-home">Home</a></li>
+    <li><a href="#page-overview">Overview</a></li>
+    <li><a href="#page-tech">Technology</a></li>
+    <li><a href="#page-app">App</a></li>
+    <li><a href="#">Support</a></li>
+  </ul>
+  <div class="nav-btn">
+    <a href="#">Buy Now</a>
+  </div>
+</nav>
+
+<section id="page-home" class="page-section">
+  <div id="video-container">
+    <video id="scene-vid" class="scene-vid" autoplay muted playsinline src="video141.mp4"></video>
+  </div>
+
+  <div id="overlay">
+    <div id="text-box">
+      <div id="scene-label">AI ANALYSIS</div>
+      <div id="main-text">PERSONALIZED CARE<br>POWERED BY AI</div>
+    </div>
+  </div>
+</section>
+
+<section id="page-overview" class="page-section premium-gray-page">
+  <div class="image-container">
+    <img src="overview.png" alt="Overview" class="large-img">
+  </div>
+</section>
+
+<section id="page-tech" class="page-section premium-gray-page">
+  <div class="image-container">
+    <img src="tec.png" alt="Technology" class="large-img">
+  </div>
+</section>
+
+<section id="page-app" class="page-section premium-gray-page">
+  <div class="image-container">
+    <img src="app.png" alt="App Experience" class="large-img">
+  </div>
+</section>
+
+<div id="progress"></div>
+
+<script>
+const scenes = [
+  { label: "AI ANALYSIS", main: "PERSONALIZED CARE<br>POWERED BY AI" },
+  { label: "TIGHTENING", main: "LIFT AND FIRM<br>GLOW EVERY DAY" },
+  { label: "LIFTING", main: "DEFINE AND ENHANCE<br>FACIAL CONTOURS" },
+  { label: "INFUSION", main: "MAXIMIZE SKINCARE<br>ABSORPTION" },
+  { label: "SMART APP", main: "TRACK YOUR SKIN<br>JOURNEY WITH AI" }
+];
+
+let currentScene = 0; let autoTimer = null; let transitioning = false;
+const videoEl = document.getElementById('scene-vid');
+
+videoEl.addEventListener('ended', function() {
+  videoEl.pause();
+  videoEl.currentTime = videoEl.duration; 
+  clearInterval(autoTimer); 
+});
+
+function buildDots() {
+  const prog = document.getElementById('progress'); prog.innerHTML = '';
+  scenes.forEach((_, i) => { 
+    const d = document.createElement('div'); d.className = 'dot' + (i === currentScene ? ' active' : ''); d.onclick = () => goToScene(i); prog.appendChild(d); 
+  });
+}
+
+function goToScene(idx) {
+  if (transitioning) return; transitioning = true;
+  const label = document.getElementById('scene-label'); const main = document.getElementById('main-text');
+  main.classList.add('fade-out'); label.classList.add('fade-out');
+  
+  setTimeout(() => {
+    currentScene = idx; const s = scenes[currentScene];
+    label.textContent = s.label; main.innerHTML = s.main;
+    setTimeout(() => { main.classList.remove('fade-out'); label.classList.remove('fade-out'); buildDots(); transitioning = false; }, 50); 
+  }, 400); 
+}
+
+function nextScene() { 
+  if (currentScene === scenes.length - 1) {
+    clearInterval(autoTimer);
+    return;
+  }
+  goToScene(currentScene + 1); 
+}
+
+function startAuto() { clearInterval(autoTimer); autoTimer = setInterval(nextScene, 2000); }
+
+buildDots(); startAuto();
+const s = scenes[0]; document.getElementById('scene-label').textContent = s.label; document.getElementById('main-text').innerHTML = s.main;
+
+/* 🛠️ 修改點擊事件監聽：移除了對 .bottom-right-home-box 的無效判定，維持其他頁面正常運作 */
+document.addEventListener('click', e => { 
+  if (e.target.closest('.navbar')) return; 
+  if (e.target.closest('#page-overview')) return; 
+  if (e.target.closest('#page-tech')) return; 
+  if (e.target.closest('#page-app')) return; 
+  if (e.target.classList.contains('dot')) return; 
+  clearInterval(autoTimer); 
+  nextScene(); 
+  startAuto(); 
+});
+</script>
+</body>
+</html>
