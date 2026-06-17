@@ -51,7 +51,7 @@
     object-fit: contain; 
   }
 
-  /* ── 頂部高奢懸浮導覽列（桌機版維持固定懸浮） ── */
+  /* ── 頂部高奢懸浮導覽列（桌機與手機統一維持懸浮固定） ── */
   .navbar {
     position: fixed; top: 0; left: 0; width: 100vw;
     height: 60px; 
@@ -146,7 +146,6 @@
     flex-direction: column;   
     align-items: center;
     justify-content: flex-end; 
-    scroll-margin-top: 60px;
   }
 
   .image-container {
@@ -169,15 +168,12 @@
 
   /* ── 📱 手機版專用響應式樣式 ── */
   @media (max-width: 768px) {
-    /* 🛠️ 關鍵修正一：解除手機版 Navbar 的固定懸浮定位，改為隨網頁被推走的絕對定位 */
     .navbar {
-      position: absolute !important; 
-      top: 0 !important;
-      left: 0 !important;
-      width: 100vw !important;
-      height: 60px !important;
+      position: fixed !important; /* 🌟 確保 Bar 繼續穩定懸浮固定在最上方 */
+      top: 0 !important; left: 0 !important; width: 100vw !important; height: 60px !important;
       padding: 0 3vw;
       justify-content: space-between;
+      background: transparent;
     }
     .nav-links {
       position: static !important;
@@ -214,48 +210,55 @@
       line-height: 1.1;
     }
 
+    /* 🌟 核心防錯機制：手機版「絕對不要」用 auto！強制維持 100vh，瀏覽器才不會認錯頁面 */
     .page-section {
-      height: auto !important;
-      min-height: auto !important;
-      overflow: visible !important;
+      height: 100vh !important;
+      min-height: 100vh !important;
+      overflow: hidden !important;
     }
 
-    /* 🛠️ 關鍵修正二：手機版的所有滾動補償全部歸零，讓各區塊頂端能百分之百死死對齊螢幕最頂端 */
+    /* 🌟 核心防錯機制二：利用精密錨點補償，扣除 60px 的 Bar 高度，讓頁面完美對齊 */
     #page-home, #page-overview, #page-tech, #page-app {
-      scroll-margin-top: 0px !important;
+      scroll-margin-top: 60px !important;
     }
 
     #page-home {
-      padding-top: 60px;
+      padding-top: 0px;
     }
     #video-container {
-      position: relative !important;
-      top: 0 !important;
+      position: absolute !important;
+      top: 60px !important;
       width: 100vw !important;
-      height: auto !important;
+      height: calc(100vh - 60px) !important;
     }
     .scene-vid {
       width: 100vw !important;
       height: auto !important;
+      max-height: 100% !important;
       object-fit: contain !important;
     }
     #overlay {
       position: absolute !important;
       top: 60px !important;
-      height: calc(100vw * 9 / 16) !important;
+      height: calc(100vh - 60px) !important;
     }
 
     .premium-gray-page {
-      display: block !important;
-      padding: 10px 0 !important;
+      display: flex !important;
+      padding: 0 !important;
+      justify-content: center !important; /* 讓圖片在 100vh 內完美上下居中 */
     }
     .image-container {
       width: 100vw !important;
-      height: auto !important;
-      display: block !important;
+      height: calc(100vh - 60px) !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
     }
     .large-img {
-      width: 100vw !important;
+      max-width: 95% !important;
+      max-height: 85% !important; /* 縮小一點圖片最大高度，幫上下釋放出更多優雅的灰色行數留白 */
+      width: auto !important;
       height: auto !important;
       display: block !important;
       margin-bottom: 0 !important;
