@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avant-Garde Experience - App</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: #f3f3f4; width: 100vw; overflow-x: hidden; font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+  .navbar { position: fixed; top: 0; left: 0; width: 100vw; height: 60px; padding: 0 5vw; z-index: 100; display: flex; align-items: center; justify-content: flex-end; background: transparent; }
+  .nav-links { display: flex; gap: 40px; list-style: none; position: absolute; left: 50%; transform: translateX(-50%); }
+  .nav-links a { color: rgba(2, 6, 23, 0.7); text-decoration: none; font-size: 14px; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; transition: color 0.3s ease; }
+  .nav-links a.active, .nav-links a:hover { color: #020617; }
+  .nav-btn a { color: #020617; text-decoration: none; font-size: 12px; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; border: 1px solid rgba(2, 6, 23, 0.4); padding: 10px 24px; border-radius: 4px; transition: all 0.3s ease; background: transparent; }
+  .nav-btn a:hover { background: #020617; color: #fff; }
+
+  .premium-gray-page { background-color: #f3f3f4; margin-top: 60px; width: 100vw; display: flex; flex-direction: column; align-items: center; }
+  .image-container { display: flex; align-items: center; justify-content: center; width: 100vw; }
+  .large-img { max-width: 98%; max-height: calc(100vh - 90px); object-fit: contain; display: block; margin-bottom: 20px; }
+
+  @media (max-width: 768px) {
+    .navbar { padding: 0 3vw; justify-content: space-between; }
+    .nav-links { position: static !important; transform: none !important; gap: 8px; overflow-x: auto; white-space: nowrap; max-width: 70vw !important; padding-bottom: 4px; }
+    .nav-links::-webkit-scrollbar { display: none; }
+    .nav-links a { font-size: 10px; letter-spacing: 0.04em; }
+    .nav-btn a { padding: 6px 8px; font-size: 10px; letter-spacing: 0.02em; }
+    .premium-gray-page { margin-top: 60px; padding-top: 20px; }
+    .image-container { width: 100vw !important; height: auto !important; display: block !important; }
+    .large-img { width: 100vw !important; height: auto !important; display: block !important; margin-bottom: 0 !important; object-fit: contain !important; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="top-navbar" class="navbar">
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="overview.html">Overview</a></li>
+    <li><a href="tech.html">Technology</a></li>
+    <li><a href="app.html" class="active">App</a></li> <li><a href="#">Support</a></li>
+  </ul>
+  <div class="nav-btn">
+    <a href="#">Buy Now</a>
+  </div>
+</nav>
+
+<div class="premium-gray-page">
+  <div class="image-container">
+    <img src="app.png" alt="App Experience" class="large-img"> </div>
+</div>
+
+</body>
+</html>
