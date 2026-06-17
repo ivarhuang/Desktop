@@ -362,29 +362,29 @@ document.addEventListener('click', e => {
   startAuto(); 
 });
 
-/* ── 📱 僅在此處追加：手機版強制精準多捲動三行的局部補償腳本 ── */
+/* ── 📱 手機版專屬：修正正負號方向，按下後精準「往下（+）」推動三行距離 ── */
 if (window.innerWidth <= 768) {
-  // OVERVIEW 點擊補償
+  // OVERVIEW 點擊：網頁往下滾，將灰色邊界精準下推到 Bar 下方
   document.querySelector('a[href="#page-overview"]').addEventListener('click', function(e) {
     e.preventDefault();
     const target = document.getElementById('page-overview');
-    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - 90;
+    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset + 80; 
     window.scrollTo({ top: targetPosition, behavior: 'smooth' });
   });
 
-  // TECHNOLOGY 點擊補償
+  // TECHNOLOGY 點擊：往下推動對齊交界
   document.querySelector('a[href="#page-tech"]').addEventListener('click', function(e) {
     e.preventDefault();
     const target = document.getElementById('page-tech');
-    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - 90;
+    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset + 80; 
     window.scrollTo({ top: targetPosition, behavior: 'smooth' });
   });
 
-  // APP 點擊補償
+  // APP 點擊：往下推動對齊交界
   document.querySelector('a[href="#page-app"]').addEventListener('click', function(e) {
     e.preventDefault();
     const target = document.getElementById('page-app');
-    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - 90;
+    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset + 80; 
     window.scrollTo({ top: targetPosition, behavior: 'smooth' });
   });
 }
