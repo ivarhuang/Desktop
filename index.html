@@ -51,7 +51,7 @@
     object-fit: contain; 
   }
 
-  /* ── 頂部高奢懸浮導覽列 ── */
+  /* ── 頂部高奢懸浮導覽列（桌機版樣式） ── */
   .navbar {
     position: fixed; top: 0; left: 0; width: 100vw;
     height: 60px; 
@@ -146,6 +146,7 @@
     flex-direction: column;   
     align-items: center;
     justify-content: flex-end; 
+    scroll-margin-top: 60px;
   }
 
   .image-container {
@@ -247,15 +248,15 @@
       object-fit: contain;
     }
 
-    /* ── 🌟 新增調整：手機版按下按鈕後的各頁面自動定位錨點（留出多行寬裕空間） ── */
+    /* ── 📱 手機版專屬精密錨點定位（精準停在兩頁交界、留出兩行舒適空間） ── */
     #page-overview {
-      scroll-margin-top: 50px !important; /* 點擊 OVERVIEW 時，停在影片與圖一交界，並預留舒適空間 */
+      scroll-margin-top: 75px !important;
     }
     #page-tech {
-      scroll-margin-top: 80px !important; /* 點擊 TECHNOLOGY 時，自動將交界分隔線留在 Bar 下方露出來 */
+      scroll-margin-top: 75px !important;
     }
     #page-app {
-      scroll-margin-top: 80px !important;  /* 點擊 APP 時，同樣自動卡在最完美的交界分水嶺位置 */
+      scroll-margin-top: 75px !important;
     }
   }
 </style>
@@ -358,8 +359,9 @@ function startAuto() { clearInterval(autoTimer); autoTimer = setInterval(nextSce
 buildDots(); startAuto();
 const s = scenes[0]; document.getElementById('scene-label').textContent = s.label; document.getElementById('main-text').innerHTML = s.main;
 
+/* ── 🛠️ 核心修復：強化排除條件，當點擊整個導覽列區塊時，徹底禁止 JS 執行干擾動作 ── */
 document.addEventListener('click', e => { 
-  if (e.target.closest('.navbar')) return; 
+  if (e.target.closest('.navbar') || e.target.closest('#top-navbar')) return; 
   if (e.target.closest('#page-overview')) return; 
   if (e.target.closest('#page-tech')) return; 
   if (e.target.closest('#page-app')) return; 
