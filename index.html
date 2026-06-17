@@ -51,7 +51,7 @@
     object-fit: contain; 
   }
 
-  /* ── 頂部高奢懸浮導覽列（桌機版樣式） ── */
+  /* ── 頂部高奢懸浮導覽列（桌機版維持固定懸浮） ── */
   .navbar {
     position: fixed; top: 0; left: 0; width: 100vw;
     height: 60px; 
@@ -169,7 +169,13 @@
 
   /* ── 📱 手機版專用響應式樣式 ── */
   @media (max-width: 768px) {
+    /* 🛠️ 關鍵修正一：解除手機版 Navbar 的固定懸浮定位，改為隨網頁被推走的絕對定位 */
     .navbar {
+      position: absolute !important; 
+      top: 0 !important;
+      left: 0 !important;
+      width: 100vw !important;
+      height: 60px !important;
       padding: 0 3vw;
       justify-content: space-between;
     }
@@ -212,6 +218,11 @@
       height: auto !important;
       min-height: auto !important;
       overflow: visible !important;
+    }
+
+    /* 🛠️ 關鍵修正二：手機版的所有滾動補償全部歸零，讓各區塊頂端能百分之百死死對齊螢幕最頂端 */
+    #page-home, #page-overview, #page-tech, #page-app {
+      scroll-margin-top: 0px !important;
     }
 
     #page-home {
@@ -361,33 +372,6 @@ document.addEventListener('click', e => {
   nextScene(); 
   startAuto(); 
 });
-
-/* ── 📱 手機版專屬：修正正負號方向，按下後精準「往下（+）」推動三行距離 ── */
-if (window.innerWidth <= 768) {
-  // OVERVIEW 點擊：網頁往下滾，將灰色邊界精準下推到 Bar 下方
-  document.querySelector('a[href="#page-overview"]').addEventListener('click', function(e) {
-    e.preventDefault();
-    const target = document.getElementById('page-overview');
-    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset +6; 
-    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-  });
-
-  // TECHNOLOGY 點擊：往下推動對齊交界
-  document.querySelector('a[href="#page-tech"]').addEventListener('click', function(e) {
-    e.preventDefault();
-    const target = document.getElementById('page-tech');
-    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset + 120; 
-    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-  });
-
-  // APP 點擊：往下推動對齊交界
-  document.querySelector('a[href="#page-app"]').addEventListener('click', function(e) {
-    e.preventDefault();
-    const target = document.getElementById('page-app');
-    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset + 200; 
-    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-  });
-}
 </script>
 </body>
 </html>
