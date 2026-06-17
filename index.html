@@ -51,7 +51,7 @@
     object-fit: contain; 
   }
 
-  /* ── 頂部高奢懸浮導覽列（桌機版樣式） ── */
+  /* ── 頂部高奢懸浮導覽列 ── */
   .navbar {
     position: fixed; top: 0; left: 0; width: 100vw;
     height: 60px; 
@@ -138,7 +138,7 @@
     transition: opacity 0.4s ease, transform 0.4s ease;
   }
 
-  /* ── 通用優雅淺灰色分頁樣式（桌機版） ── */
+  /* ── 通用優雅淺灰色分頁樣式 ── */
   .premium-gray-page {
     background-color: #f3f3f4; 
     z-index: 9; 
@@ -148,7 +148,6 @@
     justify-content: flex-end; 
   }
 
-  /* 桌機版預設隱藏手機版的名稱頭 */
   .mobile-section-title {
     display: none;
   }
@@ -169,12 +168,17 @@
     margin-bottom: 20px; 
   }
 
+  /* 🌟 預設隱藏手機版的底部空白墊 */
+  .mobile-terminal-spacer {
+    display: none;
+  }
+
   #progress { display: none !important; }
 
-  /* ── 📱 手機版專用響應式樣式（完美的「標題保險桿」一頁式架構） ── */
+  /* ── 📱 手機版專用響應式樣式 ── */
   @media (max-width: 768px) {
     .navbar {
-      position: fixed !important; /* 確保控制台永遠固定在最上方 */
+      position: fixed !important; 
       padding: 0 3vw;
       justify-content: space-between;
     }
@@ -213,19 +217,16 @@
       line-height: 1.1;
     }
 
-    /* 🌟 核心：高度放行由內容撐開，回歸緊湊排版 */
     .page-section {
       height: auto !important;
       min-height: auto !important;
       overflow: visible !important;
     }
 
-    /* 🌟 核心保險錨點：點擊按鈕時，純文字標題會精準在 Bar 下方多留出空間排隊 */
     #page-overview, #page-tech, #page-app {
       scroll-margin-top: 65px !important;
     }
 
-    /* 首頁影片結構 */
     #page-home {
       padding-top: 60px;
     }
@@ -240,28 +241,25 @@
       height: auto !important;
       object-fit: contain !important;
     }
-    /* 確保大字死死鎖在影片上 */
     #overlay {
       position: absolute !important;
       top: 60px !important;
       height: calc(100vw * 9 / 16) !important;
     }
 
-    /* 🌟 核心：手機版放行顯示「微奢華純文字名稱頭」 */
     .mobile-section-title {
       display: block !important;
       width: 100vw;
-      padding: 30px 6vw 10px 6vw; /* 上方留出舒服的呼吸空間 */
+      padding: 30px 6vw 10px 6vw; 
       font-size: 12px;
       font-weight: 600;
       letter-spacing: 0.3em;
-      color: rgba(2, 6, 23, 0.4); /* 優雅的高級感半透明灰 */
+      color: rgba(2, 6, 23, 0.4); 
       text-transform: uppercase;
       background-color: #f3f3f4;
       text-align: left;
     }
 
-    /* 圖片緊咬在標題下方 */
     .premium-gray-page {
       display: block !important;
       padding: 0 !important;
@@ -277,6 +275,14 @@
       display: block !important;
       margin-bottom: 0 !important;
       object-fit: contain !important;
+    }
+
+    /* 🌟 核心修正：讓手機版最後一頁下方的隱形緩衝墊顯形，撐出 60% 螢幕高度的空白 */
+    .mobile-terminal-spacer {
+      display: block !important;
+      width: 100vw;
+      height: 60vh; /* 給予大約半滿版的高度，提供充足的捲動衝刺空間 */
+      background-color: #f3f3f4; /* 顏色與網頁底色完全一致，達成隱形融合 */
     }
   }
 </style>
@@ -310,22 +316,27 @@
 </section>
 
 <section id="page-overview" class="page-section premium-gray-page">
-  <div class="mobile-section-title">Overview</div> <div class="image-container">
+  <div class="mobile-section-title">Overview</div>
+  <div class="image-container">
     <img src="overview1.png" alt="Overview" class="large-img">
   </div>
 </section>
 
 <section id="page-tech" class="page-section premium-gray-page">
-  <div class="mobile-section-title">Technology</div> <div class="image-container">
+  <div class="mobile-section-title">Technology</div>
+  <div class="image-container">
     <img src="tec.png" alt="Technology" class="large-img">
   </div>
 </section>
 
 <section id="page-app" class="page-section premium-gray-page">
-  <div class="mobile-section-title">App Experience</div> <div class="image-container">
+  <div class="mobile-section-title">App Experience</div>
+  <div class="image-container">
     <img src="app.png" alt="App Experience" class="large-img">
   </div>
 </section>
+
+<div class="mobile-terminal-spacer"></div>
 
 <div id="progress"></div>
 
@@ -374,7 +385,6 @@ function startAuto() { clearInterval(autoTimer); autoTimer = setInterval(nextSce
 
 startAuto();
 
-/* ── 🛠️ 只有點擊首頁「影片範圍內」才會觸發換字，其餘滾動與手滑絕不干涉 ── */
 document.getElementById('page-home').addEventListener('click', e => { 
   if (e.target.closest('.navbar')) return; 
   clearInterval(autoTimer); 
