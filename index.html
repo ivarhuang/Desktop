@@ -167,7 +167,7 @@
 
   #progress { display: none !important; }
 
-  /* ── 📱 手機版專用響應式樣式（完全還原 index (4).html 的完美版型） ── */
+  /* ── 📱 手機版專用響應式樣式 ── */
   @media (max-width: 768px) {
     .navbar {
       padding: 0 3vw;
@@ -361,6 +361,33 @@ document.addEventListener('click', e => {
   nextScene(); 
   startAuto(); 
 });
+
+/* ── 📱 僅在此處追加：手機版強制精準多捲動三行的局部補償腳本 ── */
+if (window.innerWidth <= 768) {
+  // OVERVIEW 點擊補償
+  document.querySelector('a[href="#page-overview"]').addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.getElementById('page-overview');
+    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - 90;
+    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+  });
+
+  // TECHNOLOGY 點擊補償
+  document.querySelector('a[href="#page-tech"]').addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.getElementById('page-tech');
+    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - 90;
+    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+  });
+
+  // APP 點擊補償
+  document.querySelector('a[href="#page-app"]').addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.getElementById('page-app');
+    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - 90;
+    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+  });
+}
 </script>
 </body>
 </html>
