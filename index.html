@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Avant-Garde Experience</title>
+<title>Avant-Garde Experience - Home</title>
 <style>
   /* ── 基礎全域設定 ── */
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -51,7 +51,7 @@
     object-fit: contain; 
   }
 
-  /* ── 頂部高奢懸浮導覽列（桌機版樣式） ── */
+  /* ── 頂部高奢懸浮導覽列 ── */
   .navbar {
     position: fixed; top: 0; left: 0; width: 100vw;
     height: 60px; 
@@ -138,39 +138,11 @@
     transition: opacity 0.4s ease, transform 0.4s ease;
   }
 
-  /* ── 通用優雅淺灰色分頁樣式 ── */
-  .premium-gray-page {
-    background-color: #f3f3f4; 
-    z-index: 9; 
-    display: flex;
-    flex-direction: column;   
-    align-items: center;
-    justify-content: flex-end; 
-    scroll-margin-top: 60px;
-  }
-
-  .image-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100vw;
-    height: calc(100vh - 60px); 
-  }
-
-  .large-img {
-    max-width: 98%;  
-    max-height: calc(100vh - 90px); 
-    object-fit: contain; 
-    display: block;
-    margin-bottom: 20px; 
-  }
-
   #progress { display: none !important; }
 
-  /* ── 📱 手機版專用響應式樣式（回歸最完美的原生結構） ── */
+  /* ── 📱 手機版專用響應式樣式 ── */
   @media (max-width: 768px) {
     .navbar {
-      position: fixed !important; /* 確保繼續浮動 */
       padding: 0 3vw;
       justify-content: space-between;
     }
@@ -209,16 +181,10 @@
       line-height: 1.1;
     }
 
-    /* 緊湊型排版，高度交由圖片彈性撐開 */
     .page-section {
       height: auto !important;
       min-height: auto !important;
       overflow: visible !important;
-    }
-
-    /* 🛠️ 修正點：利用原生 CSS 滾動邊距，精準扣除 60px 導覽列，不再需要 JS 控制滾動 */
-    #page-overview, #page-tech, #page-app {
-      scroll-margin-top: 65px !important;
     }
 
     #page-home {
@@ -235,29 +201,10 @@
       height: auto !important;
       object-fit: contain !important;
     }
-    
-    /* 🛠️ 確保大字百分之百絕對堆疊在影片正上方，絕對不掉下去 */
     #overlay {
       position: absolute !important;
       top: 60px !important;
       height: calc(100vw * 9 / 16) !important;
-    }
-
-    .premium-gray-page {
-      display: block !important;
-      padding: 10px 0 !important;
-    }
-    .image-container {
-      width: 100vw !important;
-      height: auto !important;
-      display: block !important;
-    }
-    .large-img {
-      width: 100vw !important;
-      height: auto !important;
-      display: block !important;
-      margin-bottom: 0 !important;
-      object-fit: contain !important;
     }
   }
 </style>
@@ -266,10 +213,10 @@
 
 <nav id="top-navbar" class="navbar">
   <ul class="nav-links">
-    <li><a href="#page-home">Home</a></li>
-    <li><a href="#page-overview">Overview</a></li>
-    <li><a href="#page-tech">Technology</a></li>
-    <li><a href="#page-app">App</a></li>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="overview.html">Overview</a></li>
+    <li><a href="tech.html">Technology</a></li>
+    <li><a href="app.html">App</a></li>
     <li><a href="#">Support</a></li>
   </ul>
   <div class="nav-btn">
@@ -287,24 +234,6 @@
       <div id="scene-label">AI ANALYSIS</div>
       <div id="main-text">PERSONALIZED CARE<br>POWERED BY AI</div>
     </div>
-  </div>
-</section>
-
-<section id="page-overview" class="page-section premium-gray-page">
-  <div class="image-container">
-    <img src="overview1.png" alt="Overview" class="large-img">
-  </div>
-</section>
-
-<section id="page-tech" class="page-section premium-gray-page">
-  <div class="image-container">
-    <img src="tec.png" alt="Technology" class="large-img">
-  </div>
-</section>
-
-<section id="page-app" class="page-section premium-gray-page">
-  <div class="image-container">
-    <img src="app.png" alt="App Experience" class="large-img">
   </div>
 </section>
 
@@ -338,12 +267,15 @@ function buildDots() {
 function goToScene(idx) {
   if (transitioning) return; transitioning = true;
   const label = document.getElementById('scene-label'); const main = document.getElementById('main-text');
-  main.classList.add('fade-out'); label.classList.add('fade-out');
+  
+  if(main) main.style.opacity = 0;
+  if(label) label.style.opacity = 0;
   
   setTimeout(() => {
     currentScene = idx; const s = scenes[currentScene];
-    label.textContent = s.label; main.innerHTML = s.main;
-    setTimeout(() => { main.classList.remove('fade-out'); label.classList.remove('fade-out'); buildDots(); transitioning = false; }, 50); 
+    if(label) { label.textContent = s.label; label.style.opacity = 1; }
+    if(main) { main.innerHTML = s.main; main.style.opacity = 1; }
+    transitioning = false;
   }, 400); 
 }
 
@@ -357,10 +289,9 @@ function nextScene() {
 
 function startAuto() { clearInterval(autoTimer); autoTimer = setInterval(nextScene, 2000); }
 
-buildDots(); startAuto();
-const s = scenes[0]; document.getElementById('scene-label').textContent = s.label; document.getElementById('main-text').innerHTML = s.main;
+startAuto();
 
-/* ── 🛠️ 徹底修復手滑亂跳問題：只有在首頁「影片範圍內」點擊才會觸換，在其他頁面滑動絕不干涉 ── */
+// 只有點擊影片區域才會切換文字，絕不干涉其他地方
 document.getElementById('page-home').addEventListener('click', e => { 
   if (e.target.closest('.navbar')) return; 
   clearInterval(autoTimer); 
