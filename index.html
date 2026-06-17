@@ -165,9 +165,9 @@
 
   #progress { display: none !important; }
 
-  /* ── 📱 手機版響應式 RWD 補救樣式 ── */
+  /* ── 📱 手機版響應式 RWD 補救樣式（方案一：修正定位、全面滿版） ── */
   @media (max-width: 768px) {
-    /* 修正手機版導覽列文字重疊與排版問題 */
+    /* 修正手機版導覽列文字重疊問題 */
     .navbar {
       padding: 0 4vw;
       justify-content: space-between;
@@ -182,7 +182,7 @@
       padding-bottom: 4px;
     }
     .nav-links::-webkit-scrollbar {
-      display: none; /* 隱藏捲動條維持極簡 */
+      display: none;
     }
     .nav-links a {
       font-size: 11px;
@@ -194,7 +194,7 @@
       letter-spacing: 0.1em;
     }
 
-    /* 調整首頁首圖文字字級，避免字體過大折行或遮擋 */
+    /* 調整首頁文字字級，防止折行遮擋 */
     #text-box {
       padding: 0 8vw;
     }
@@ -208,29 +208,41 @@
       line-height: 1.1;
     }
 
-    /* 解除手機端 100vh 限制：防範橫式圖片在直式螢幕上下產生大片淺灰空洞 */
+    /* 解除產品頁面（Overview, Tech, App）的 100vh 高度鎖定，避免產生上下死灰空白 */
     .page-section {
       height: auto !important;
       min-height: auto;
     }
     
-    /* 唯獨首頁影片維持 100vh 滿版效果 */
+    /* 🌟 首頁影片完美滿版修正：重置推擠與高度 🌟 */
     #page-home {
       height: 100vh !important;
+      position: relative;
     }
     #video-container {
-      height: calc(100vh - 60px);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 5;
     }
     .scene-vid {
       width: 100vw;
-      height: 100%;
-      object-fit: cover; /* 讓首頁影片在手機上滿版裁切，保留高奢氛圍 */
+      height: 100vh;
+      max-width: none;
+      max-height: none;
+      object-fit: cover; /* 滿版裁切左右兩側，絕不留上下白邊 */
+    }
+    #overlay {
+      top: 0;
+      height: 100vh; /* 文字容器完美貼合滿版螢幕 */
     }
 
-    /* 產品介紹頁（Overview, Tech, App）改為隨圖片高度自然延伸（精緻電子雜誌感） */
+    /* 產品介紹頁改為如同電子雜誌般的自然長滾動樣式 */
     .premium-gray-page {
       justify-content: center;
-      padding: 60px 0 40px 0; /* 留出上方導覽列與下方的優雅呼吸感間距 */
+      padding: 60px 0 40px 0;
     }
     .image-container {
       height: auto !important;
