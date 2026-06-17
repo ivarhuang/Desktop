@@ -51,13 +51,14 @@
     object-fit: contain; 
   }
 
-  /* ── 頂部高奢懸浮導覽列 ── */
+  /* ── 頂部高奢懸浮導覽列（預設：首頁黑字版） ── */
   .navbar {
     position: fixed; top: 0; left: 0; width: 100vw;
     height: 60px; 
     padding: 0 5vw; z-index: 100;
     display: flex; align-items: center; justify-content: flex-end; 
     background: transparent; 
+    transition: all 0.4s ease; /* 讓反白切換時有優雅的漸變效果 */
   }
 
   .nav-links {
@@ -72,7 +73,7 @@
     font-weight: 600;        
     letter-spacing: 0.3em;   
     text-transform: uppercase; 
-    transition: color 0.3s ease;
+    transition: color 0.4s ease;
   }
 
   .nav-links a:hover { color: #020617; }
@@ -87,11 +88,27 @@
     border: 1px solid rgba(2, 6, 23, 0.4); 
     padding: 10px 24px;       
     border-radius: 4px; 
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
     background: transparent;
   }
 
   .nav-btn a:hover { background: #020617; color: #fff; }
+
+  /* 🌟 核心新增：當進入其他頁面時，啟動「反白模式」CSS ── */
+  .navbar.nav-inverse .nav-links a {
+    color: rgba(255, 255, 255, 0.6); /* 變成半透明白 */
+  }
+  .navbar.nav-inverse .nav-links a:hover {
+    color: #ffffff; /* 懸浮變成純白 */
+  }
+  .navbar.nav-inverse .nav-btn a {
+    color: #ffffff;
+    border-1px-solid: rgba(255, 255, 255, 0.5);
+  }
+  .navbar.nav-inverse .nav-btn a:hover {
+    background: #ffffff;
+    color: #020617;
+  }
   
   /* ── 第一頁輪播文字容器 ── */
   #overlay {
@@ -168,7 +185,6 @@
     margin-bottom: 20px; 
   }
 
-  /* 🌟 預設隱藏手機版的底部空白墊 */
   .mobile-terminal-spacer {
     display: none;
   }
@@ -223,6 +239,7 @@
       overflow: visible !important;
     }
 
+    /* 點擊按鈕時的定位 */
     #page-overview, #page-tech, #page-app {
       scroll-margin-top: 65px !important;
     }
@@ -260,6 +277,13 @@
       text-align: left;
     }
 
+    /* 🌟 核心新增：在手機反白模式下，讓手機版標題字稍微亮一點，與反白控制列呼應 */
+    .navbar.nav-inverse ~ #page-overview .mobile-section-title,
+    .navbar.nav-inverse ~ #page-tech .mobile-section-title,
+    .navbar.nav-inverse ~ #page-app .mobile-section-title {
+      color: rgba(2, 6, 23, 0.6);
+    }
+
     .premium-gray-page {
       display: block !important;
       padding: 0 !important;
@@ -277,12 +301,11 @@
       object-fit: contain !important;
     }
 
-    /* 🌟 核心修正：讓手機版最後一頁下方的隱形緩衝墊顯形，撐出 60% 螢幕高度的空白 */
     .mobile-terminal-spacer {
       display: block !important;
       width: 100vw;
-      height: 60vh; /* 給予大約半滿版的高度，提供充足的捲動衝刺空間 */
-      background-color: #f3f3f4; /* 顏色與網頁底色完全一致，達成隱形融合 */
+      height: 60vh; 
+      background-color: #f3f3f4; 
     }
   }
 </style>
@@ -291,10 +314,10 @@
 
 <nav id="top-navbar" class="navbar">
   <ul class="nav-links">
-    <li><a href="#page-home">Home</a></li>
-    <li><a href="#page-overview">Overview</a></li>
-    <li><a href="#page-tech">Technology</a></li>
-    <li><a href="#page-app">App</a></li>
+    <li><a href="#page-home" onclick="setNavbarInverse(false)">Home</a></li>
+    <li><a href="#page-overview" onclick="setNavbarInverse(true)">Overview</a></li>
+    <li><a href="#page-tech" onclick="setNavbarInverse(true)">Technology</a></li>
+    <li><a href="#page-app" onclick="setNavbarInverse(true)">App</a></li>
     <li><a href="#">Support</a></li>
   </ul>
   <div class="nav-btn">
@@ -341,6 +364,27 @@
 <div id="progress"></div>
 
 <script>
+/* ── 🌟 核心新增：控制導覽列反白的超輕量化邏輯 ── */
+function setNavbarInverse(isInverse) {
+  const navbar = document.getElementById('top-navbar');
+  if (isInverse) {
+    navbar.classList.add('nav-inverse'); // 加上反白標籤 (變白色)
+  } else {
+    navbar.classList.remove('nav-inverse'); // 移除反白標籤 (恢復原色黑)
+  }
+}
+
+// 監聽手滑滾動：如果使用者自己用手指滑回最頂端，自動把 Bar 恢復成黑色
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  // 如果滾動距離小於 50 像素（基本上就是還在首頁範圍內）
+  if (scrollTop < 50) {
+    setNavbarInverse(false);
+  }
+});
+
+
+/* ── 原本控制影片大字輪播的乾淨腳本 ── */
 const scenes = [
   { label: "AI ANALYSIS", main: "PERSONALIZED CARE<br>POWERED BY AI" },
   { label: "TIGHTENING", main: "LIFT AND FIRM<br>GLOW EVERY DAY" },
