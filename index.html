@@ -368,7 +368,7 @@ if (window.innerWidth <= 768) {
   document.querySelector('a[href="#page-overview"]').addEventListener('click', function(e) {
     e.preventDefault();
     const target = document.getElementById('page-overview');
-    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset +25; 
+    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset +10; 
     window.scrollTo({ top: targetPosition, behavior: 'smooth' });
   });
 
