@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Avant-Garde Experience · Ver 5.97 (Architecture Fixed)</title>
+<title>Avant-Garde Experience · Ver 5.98 (Mobile Layout Fixed)</title>
 <style>
   /* ── 基礎全域設定 ── */
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -17,66 +17,40 @@
     font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif; 
   }
   
-  /* ── 🖥️ 桌機版專用樣式 (螢幕寬度大於 768px 才生效) ── */
-  @media (min-width: 769px) {
-    .page-section {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-    }
-    #video-container {
-      position: absolute; 
-      top: 60px; 
-      left: 0; 
-      width: 100vw; 
-      height: calc(100vh - 60px); 
-      z-index: 5; 
-      pointer-events: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .scene-vid {
-      max-width: 100%; 
-      max-height: 100%; 
-      display: block;
-      object-fit: contain; 
-    }
-    #overlay {
-      position: absolute; top: 60px; left: 0; width: 100%; height: calc(100vh - 60px);
-      z-index: 10; 
-      display: flex; 
-      flex-direction: column;
-      align-items: center;     
-      justify-content: center; 
-      pointer-events: none;
-    }
-    .premium-gray-page {
-      background-color: #f3f3f4; 
-      z-index: 9; 
-      display: flex;
-      flex-direction: column;   
-      align-items: center;
-      justify-content: flex-end; 
-    }
-    .image-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100vw;
-      height: calc(100vh - 60px); 
-    }
-    .large-img {
-      max-width: 98%;  
-      max-height: calc(100vh - 90px); 
-      object-fit: contain; 
-      display: block;
-      margin-bottom: 20px; 
-    }
+  .page-section {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
   }
 
-  /* ── 通用導覽列基底（桌機模式） ── */
+  /* ── 第一頁：影片首頁 ── */
+  #page-home {
+    background-color: #f3f3f4; 
+    z-index: 10;
+  }
+
+  #video-container {
+    position: absolute; 
+    top: 60px; 
+    left: 0; 
+    width: 100vw; 
+    height: calc(100vh - 60px); 
+    z-index: 5; 
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .scene-vid {
+    max-width: 100%; 
+    max-height: 100%; 
+    display: block;
+    object-fit: contain; 
+  }
+
+  /* ── 頂部高奢懸浮導覽列（全時深色調、純透明） ── */
   .navbar {
     position: fixed; top: 0; left: 0; width: 100vw;
     height: 60px; 
@@ -84,10 +58,12 @@
     display: flex; align-items: center; justify-content: flex-end; 
     background: transparent; 
   }
+
   .nav-links {
     display: flex; gap: 40px; list-style: none;
     position: absolute; left: 50%; transform: translateX(-50%); 
   }
+
   .nav-links a {
     color: rgba(2, 6, 23, 0.7); 
     text-decoration: none;
@@ -97,7 +73,9 @@
     text-transform: uppercase; 
     transition: color 0.3s ease;
   }
+
   .nav-links a:hover { color: #020617; }
+
   .nav-btn a {
     color: #020617; 
     text-decoration: none;
@@ -111,9 +89,21 @@
     transition: all 0.3s ease;
     background: transparent;
   }
-  .nav-btn a:hover { background: #020617; color: #fff; }
 
-  /* 文字輪播保險箱 */
+  .nav-btn a:hover { background: #020617; color: #fff; }
+  
+  /* ── 第一頁輪播文字容器 ── */
+  #overlay {
+    position: absolute; top: 60px; left: 0; width: 100%; height: calc(100vh - 60px);
+    z-index: 10; 
+    display: flex; 
+    flex-direction: column;
+    align-items: center;     
+    justify-content: center; 
+    pointer-events: none;
+  }
+  
+  /* 文字保險箱 */
   #text-box {
     width: 100%;
     max-width: 1400px; 
@@ -124,6 +114,7 @@
     align-items: flex-start;   
     background: transparent;   
   }
+
   #scene-label {
     font-size: 20px; 
     letter-spacing: 0.4em; text-transform: uppercase;
@@ -134,6 +125,7 @@
     display: block;
     text-align: left;    
   }
+  
   #main-text {
     font-size: clamp(30px, 4.5vw, 64px); 
     font-weight: 900; 
@@ -145,22 +137,50 @@
     transition: opacity 0.4s ease, transform 0.4s ease;
   }
 
+  /* ── 通用優雅淺灰色分頁樣式 ── */
+  .premium-gray-page {
+    background-color: #f3f3f4; 
+    z-index: 9; 
+    display: flex;
+    flex-direction: column;   
+    align-items: center;
+    justify-content: flex-end; 
+  }
+
+  .image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: calc(100vh - 60px); 
+  }
+
+  .large-img {
+    max-width: 98%;  
+    max-height: calc(100vh - 90px); 
+    object-fit: contain; 
+    display: block;
+    margin-bottom: 20px; 
+  }
+
   #progress { display: none !important; }
 
-  /* ── 📱 手機版專用樣式 (螢幕寬度小於 768px 生效) ── */
+  /* ── 📱 手機版強效響應式 RWD 補救樣式（對齊比例、消滅死白） ── */
   @media (max-width: 768px) {
-    /* 導覽列極簡橫向滑動 */
+    /* 導覽列極簡橫向滑動 + 微調底色防止跟上方文字撞色 */
     .navbar {
       padding: 0 4vw;
       justify-content: space-between;
+      background: rgba(243, 243, 244, 0.85) !important; /* 加上半透明微底色，確保文字清晰 */
+      backdrop-filter: blur(10px);
     }
     .nav-links {
-      position: static;
-      transform: none;
+      position: static !important;
+      transform: none !important;
       gap: 15px;
       overflow-x: auto;
       white-space: nowrap;
-      max-width: 65vw;
+      max-width: 62vw;
       padding-bottom: 4px;
     }
     .nav-links::-webkit-scrollbar {
@@ -171,79 +191,74 @@
       letter-spacing: 0.15em;
     }
     .nav-btn a {
-      padding: 6px 14px;
+      padding: 6px 12px;
       font-size: 11px;
       letter-spacing: 0.1em;
     }
 
-    /* 手機版標題字級優化 */
-    #text-box {
-      padding: 0 8vw;
-    }
-    #scene-label {
-      font-size: 14px;
-      letter-spacing: 0.25em;
-      margin-bottom: 12px;
-    }
-    #main-text {
-      font-size: clamp(22px, 6vw, 32px);
-      line-height: 1.1;
-    }
-
-    /* 🛠️ 徹底摧毀空白核心：在手機版完全拔除 100vh 與 overflow: hidden */
+    /* 🛠️ 手機版高度重定位：首頁與後續產品頁全部依比例自然緊湊排列 */
     .page-section {
-      position: relative;
-      width: 100vw;
-      height: auto;
-      overflow: visible;
+      height: auto !important;
+      min-height: auto !important;
+      overflow: visible !important;
     }
 
-    /* 首頁影片區塊自然包裹 */
+    /* 首頁影片區塊與高度精確控制 */
     #page-home {
-      padding-top: 60px;
+      padding-top: 60px; /* 留出導覽列高度 */
+      height: calc(100vw * 9 / 16) !important; /* 強制首頁區塊高度完全等於 16:9 影片高度，絕不留白！ */
     }
     #video-container {
-      position: relative;
-      top: 0;
-      width: 100vw;
-      height: auto;
-      pointer-events: none;
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100vw !important;
+      height: 100% !important;
     }
     .scene-vid {
-      width: 100vw;
-      height: auto;
-      display: block;
-      object-fit: contain;
-    }
-    #overlay {
-      position: absolute;
-      top: 60px;
-      left: 0;
-      width: 100%;
-      height: calc(100vw * 9 / 16);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      width: 100vw !important;
+      height: 100% !important;
+      object-fit: contain !important;
     }
 
-    /* 產品介紹頁（Overview, Tech, App）：完全移除桌機版的 flex 推擠與固定高度 */
+    /* 🛠️ 重疊文字容器修正：精確覆蓋在 16:9 影片上，拿掉多餘的 100vh 高度推擠 */
+    #overlay {
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      justify-content: center !important;
+    }
+    #text-box {
+      padding: 0 6vw !important;
+    }
+    #scene-label {
+      font-size: 12px !important;
+      letter-spacing: 0.2em !important;
+      margin-bottom: 6px !important;
+    }
+    #main-text {
+      font-size: clamp(16px, 5.5vw, 26px) !important;
+      line-height: 1.1 !important;
+    }
+
+    /* 產品介紹頁（Overview, Tech, App）：完全移除 flex 底部推擠，讓圖片緊密相連 */
     .premium-gray-page {
-      background-color: #f3f3f4;
-      display: block;
+      display: block !important;
+      padding: 0 !important; 
     }
     .image-container {
-      width: 100vw;
-      height: auto;
-      display: block;
+      width: 100vw !important;
+      height: auto !important;
+      display: block !important;
     }
     .large-img {
-      width: 100vw;
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin-bottom: 0;
-      object-fit: contain;
+      width: 100vw !important;
+      max-width: 100% !important;
+      height: auto !important;
+      display: block !important;
+      margin-bottom: 0 !important;
     }
   }
 </style>
@@ -259,7 +274,7 @@
     <li><a href="#">Support</a></li>
   </ul>
   <div class="nav-btn">
-    <a href="#">測試更新111w</a>
+    <a href="#">Buy Now</a>
   </div>
 </nav>
 
