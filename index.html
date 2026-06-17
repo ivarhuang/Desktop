@@ -51,7 +51,7 @@
     object-fit: contain; 
   }
 
-  /* ── 頂部高奢懸浮導覽列（桌機與手機統一維持懸浮固定） ── */
+  /* ── 頂部高奢懸浮導覽列 ── */
   .navbar {
     position: fixed; top: 0; left: 0; width: 100vw;
     height: 60px; 
@@ -169,11 +169,10 @@
   /* ── 📱 手機版專用響應式樣式 ── */
   @media (max-width: 768px) {
     .navbar {
-      position: fixed !important; /* 🌟 確保 Bar 繼續穩定懸浮固定在最上方 */
+      position: fixed !important;
       top: 0 !important; left: 0 !important; width: 100vw !important; height: 60px !important;
       padding: 0 3vw;
       justify-content: space-between;
-      background: transparent;
     }
     .nav-links {
       position: static !important;
@@ -210,55 +209,49 @@
       line-height: 1.1;
     }
 
-    /* 🌟 核心防錯機制：手機版「絕對不要」用 auto！強制維持 100vh，瀏覽器才不會認錯頁面 */
+    /* 🌟 修正點一：解除 100vh 的空洞限制，改回 auto 緊湊排版！但強制補上 min-height 撐開地基，防止瀏覽器認錯頁面 */
     .page-section {
-      height: 100vh !important;
-      min-height: 100vh !important;
-      overflow: hidden !important;
+      height: auto !important;
+      min-height: 400px !important; 
+      overflow: visible !important;
     }
 
-    /* 🌟 核心防錯機制二：利用精密錨點補償，扣除 60px 的 Bar 高度，讓頁面完美對齊 */
+    /* 🌟 修正點二：專屬手機版的滑動補償距離，扣除 Bar 的 60px */
     #page-home, #page-overview, #page-tech, #page-app {
       scroll-margin-top: 60px !important;
     }
 
     #page-home {
-      padding-top: 0px;
+      padding-top: 60px;
     }
     #video-container {
-      position: absolute !important;
-      top: 60px !important;
+      position: relative !important;
+      top: 0 !important;
       width: 100vw !important;
-      height: calc(100vh - 60px) !important;
+      height: auto !important;
     }
     .scene-vid {
       width: 100vw !important;
       height: auto !important;
-      max-height: 100% !important;
       object-fit: contain !important;
     }
     #overlay {
       position: absolute !important;
       top: 60px !important;
-      height: calc(100vh - 60px) !important;
+      height: calc(100vw * 9 / 16) !important;
     }
 
     .premium-gray-page {
-      display: flex !important;
+      display: block !important;
       padding: 0 !important;
-      justify-content: center !important; /* 讓圖片在 100vh 內完美上下居中 */
     }
     .image-container {
       width: 100vw !important;
-      height: calc(100vh - 60px) !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
+      height: auto !important;
+      display: block !important;
     }
     .large-img {
-      max-width: 95% !important;
-      max-height: 85% !important; /* 縮小一點圖片最大高度，幫上下釋放出更多優雅的灰色行數留白 */
-      width: auto !important;
+      width: 100vw !important;
       height: auto !important;
       display: block !important;
       margin-bottom: 0 !important;
@@ -375,6 +368,30 @@ document.addEventListener('click', e => {
   nextScene(); 
   startAuto(); 
 });
+
+/* ── 📱 修正過後的精密手機版單獨按鈕點擊補償（加號 + 20 像素，只微調下來一行） ── */
+if (window.innerWidth <= 768) {
+  document.querySelector('a[href="#page-overview"]').addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.getElementById('page-overview');
+    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset + 20; 
+    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+  });
+
+  document.querySelector('a[href="#page-tech"]').addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.getElementById('page-tech');
+    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset + 20; 
+    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+  });
+
+  document.querySelector('a[href="#page-app"]').addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.getElementById('page-app');
+    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset + 20; 
+    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+  });
+}
 </script>
 </body>
 </html>
