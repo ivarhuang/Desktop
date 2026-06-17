@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Avant-Garde Experience · Ver 5.99 (Viewport Fixed)</title>
+<title>Avant-Garde Experience</title>
 <style>
   /* ── 基礎全域設定 ── */
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -51,7 +51,7 @@
     object-fit: contain; 
   }
 
-  /* ── 頂部高奢懸浮導覽列（全時深色調、純透明） ── */
+  /* ── 頂部高奢懸浮導覽列（桌機版樣式） ── */
   .navbar {
     position: fixed; top: 0; left: 0; width: 100vw;
     height: 60px; 
@@ -166,9 +166,8 @@
 
   #progress { display: none !important; }
 
-  /* ── 📱 手機版響應式樣式（啟動 Viewport 後會真正生效！） ── */
+  /* ── 📱 手機版專用響應式樣式 ── */
   @media (max-width: 768px) {
-    /* 導覽列優化：不重疊 */
     .navbar {
       padding: 0 4vw;
       justify-content: space-between;
@@ -179,7 +178,8 @@
       gap: 12px;
       overflow-x: auto;
       white-space: nowrap;
-      max-width: 60vw;
+      /* 🛠️ 修正點：放寬最大寬度限制，確保 Support 不會被推擠隱藏或裁切 */
+      max-width: 68vw !important; 
       padding-bottom: 4px;
     }
     .nav-links::-webkit-scrollbar {
@@ -195,7 +195,6 @@
       letter-spacing: 0.05em;
     }
 
-    /* 調整手機版字體大小 */
     #text-box {
       padding: 0 6vw;
     }
@@ -209,14 +208,12 @@
       line-height: 1.1;
     }
 
-    /* 🛠️ 徹底移除手機端的 100vh 巨大推擠，讓頁面自然銜接 */
     .page-section {
       height: auto !important;
       min-height: auto !important;
       overflow: visible !important;
     }
 
-    /* 首頁影片區塊自然包裹 */
     #page-home {
       padding-top: 60px;
     }
@@ -229,7 +226,7 @@
     .scene-vid {
       width: 100vw !important;
       height: auto !important;
-      object-fit: contain !important; /* 保持你原本對的圖片比例 */
+      object-fit: contain !important;
     }
     #overlay {
       position: absolute !important;
@@ -237,10 +234,9 @@
       height: calc(100vw * 9 / 16) !important;
     }
 
-    /* 產品介紹頁（Overview, Tech, App）：移除向下推的 flex-end，改為垂直緊湊排列 */
     .premium-gray-page {
       display: block !important;
-      padding: 10px 0 !important; /* 極小內邊距，消除大斷層 */
+      padding: 10px 0 !important;
     }
     .image-container {
       width: 100vw !important;
@@ -252,7 +248,7 @@
       height: auto !important;
       display: block !important;
       margin-bottom: 0 !important;
-      object-fit: contain !important; /* 保持正確圖片比例，且上下不會多出大空檔 */
+      object-fit: contain !important;
     }
   }
 </style>
@@ -268,7 +264,7 @@
     <li><a href="#">Support</a></li>
   </ul>
   <div class="nav-btn">
-    <a href="#">測試更新111</a>
+    <a href="#">Buy Now</a>
   </div>
 </nav>
 
