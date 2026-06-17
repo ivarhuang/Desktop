@@ -146,6 +146,7 @@
     flex-direction: column;   
     align-items: center;
     justify-content: flex-end; 
+    scroll-margin-top: 60px;
   }
 
   .image-container {
@@ -166,7 +167,7 @@
 
   #progress { display: none !important; }
 
-  /* ── 📱 手機版專用響應式樣式 ── */
+  /* ── 📱 手機版專用響應式樣式（完全還原 index (4).html 的完美版型） ── */
   @media (max-width: 768px) {
     .navbar {
       padding: 0 3vw;
@@ -175,20 +176,23 @@
     .nav-links {
       position: static !important;
       transform: none !important;
-      display: flex !important;
-      align-items: center !important;
-      gap: 8px !important;
-      max-width: 70vw !important;
-      padding-bottom: 0px;
+      gap: 8px;
+      overflow-x: auto;
+      white-space: nowrap;
+      max-width: 70vw !important; 
+      padding-bottom: 4px;
+    }
+    .nav-links::-webkit-scrollbar {
+      display: none;
     }
     .nav-links a {
-      font-size: 10px !important;
-      letter-spacing: 0.04em !important;
+      font-size: 10px;
+      letter-spacing: 0.04em;
     }
     .nav-btn a {
-      padding: 6px 8px !important;
-      font-size: 10px !important;
-      letter-spacing: 0.02em !important;
+      padding: 6px 8px;
+      font-size: 10px;
+      letter-spacing: 0.02em;
     }
 
     #text-box {
@@ -224,14 +228,10 @@
       height: auto !important;
       object-fit: contain !important;
     }
-    
-    /* 🛠️ 關鍵修正一：解除手機版輪播容器的絕對定位，轉為隨內容推擠的靜態區塊，防止高度拉扯衝突 */
     #overlay {
-      position: relative !important;
-      top: 0 !important;
-      height: auto !important;
-      padding: 30px 0 !important;
-      display: flex !important;
+      position: absolute !important;
+      top: 60px !important;
+      height: calc(100vw * 9 / 16) !important;
     }
 
     .premium-gray-page {
@@ -248,18 +248,7 @@
       height: auto !important;
       display: block !important;
       margin-bottom: 0 !important;
-      object-fit: contain;
-    }
-
-    /* 🛠️ 關鍵修正二：重新精準計算「各圖片交界線自動卡在 Bar 下方且多留兩行」的滾動定位邊距 */
-    #page-overview {
-      scroll-margin-top: 90px !important; 
-    }
-    #page-tech {
-      scroll-margin-top: 105px !important; 
-    }
-    #page-app {
-      scroll-margin-top: 105px !important;  
+      object-fit: contain !important;
     }
   }
 </style>
@@ -362,9 +351,8 @@ function startAuto() { clearInterval(autoTimer); autoTimer = setInterval(nextSce
 buildDots(); startAuto();
 const s = scenes[0]; document.getElementById('scene-label').textContent = s.label; document.getElementById('main-text').innerHTML = s.main;
 
-/* ── 🛠️ 關鍵修正三：全面封鎖手機版 Navbar 對點擊事件的任何干擾，防範定位吸附衝突 ── */
 document.addEventListener('click', e => { 
-  if (e.target.closest('.navbar') || e.target.closest('#top-navbar')) return; 
+  if (e.target.closest('.navbar')) return; 
   if (e.target.closest('#page-overview')) return; 
   if (e.target.closest('#page-tech')) return; 
   if (e.target.closest('#page-app')) return; 
