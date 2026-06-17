@@ -51,7 +51,7 @@
     object-fit: contain; 
   }
 
-  /* ── 頂部高奢懸浮導覽列（桌機版樣式） ── */
+  /* ── 頂部高奢懸浮導覽列 ── */
   .navbar {
     position: fixed; top: 0; left: 0; width: 100vw;
     height: 60px; 
@@ -146,8 +146,6 @@
     flex-direction: column;   
     align-items: center;
     justify-content: flex-end; 
-    /* 🌟 新增這行：解決點擊導覽列時，頁面頂端被 60px 導覽列遮擋的問題 */
-    scroll-margin-top: 60px;
   }
 
   .image-container {
@@ -177,24 +175,20 @@
     .nav-links {
       position: static !important;
       transform: none !important;
-      gap: 8px;
-      overflow-x: auto;
-      white-space: nowrap;
-      /* 🛠️ 修正點：放寬最大寬度限制，確保 Support 不會被推擠隱藏或裁切 */
-      max-width: 70vw !important; 
-      padding-bottom: 4px;
-    }
-    .nav-links::-webkit-scrollbar {
-      display: none;
+      display: flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      max-width: 70vw !important;
+      padding-bottom: 0px;
     }
     .nav-links a {
-      font-size: 10px;
-      letter-spacing: 0.04em;
+      font-size: 10px !important;
+      letter-spacing: 0.04em !important;
     }
     .nav-btn a {
-      padding: 6px 8px;
-      font-size: 10px;
-      letter-spacing: 0.02em;
+      padding: 6px 8px !important;
+      font-size: 10px !important;
+      letter-spacing: 0.02em !important;
     }
 
     #text-box {
@@ -250,7 +244,18 @@
       height: auto !important;
       display: block !important;
       margin-bottom: 0 !important;
-      object-fit: contain !important;
+      object-fit: contain;
+    }
+
+    /* ── 🌟 新增調整：手機版按下按鈕後的各頁面自動定位錨點（留出多行寬裕空間） ── */
+    #page-overview {
+      scroll-margin-top: 50px !important; /* 點擊 OVERVIEW 時，停在影片與圖一交界，並預留舒適空間 */
+    }
+    #page-tech {
+      scroll-margin-top: 80px !important; /* 點擊 TECHNOLOGY 時，自動將交界分隔線留在 Bar 下方露出來 */
+    }
+    #page-app {
+      scroll-margin-top: 80px !important;  /* 點擊 APP 時，同樣自動卡在最完美的交界分水嶺位置 */
     }
   }
 </style>
