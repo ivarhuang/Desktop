@@ -103,7 +103,7 @@
     pointer-events: none;
   }
   
-  /* 文字保險箱（可透過調整 padding: 0 18vw; 裡面的 18vw 來決定文字左右位置） */
+  /* 文字保險箱 */
   #text-box {
     width: 100%;
     max-width: 1400px; 
@@ -137,8 +137,6 @@
     transition: opacity 0.4s ease, transform 0.4s ease;
   }
 
-  /* ── 🛠️ 修改：原本右下角的 .bottom-right-home-box 已經完全移除 ── */
-
   /* ── 通用優雅淺灰色分頁樣式 ── */
   .premium-gray-page {
     background-color: #f3f3f4; 
@@ -166,6 +164,87 @@
   }
 
   #progress { display: none !important; }
+
+  /* ── 📱 手機版響應式 RWD 補救樣式 ── */
+  @media (max-width: 768px) {
+    /* 修正手機版導覽列文字重疊與排版問題 */
+    .navbar {
+      padding: 0 4vw;
+      justify-content: space-between;
+    }
+    .nav-links {
+      position: static;
+      transform: none;
+      gap: 15px;
+      overflow-x: auto;
+      white-space: nowrap;
+      max-width: 65vw;
+      padding-bottom: 4px;
+    }
+    .nav-links::-webkit-scrollbar {
+      display: none; /* 隱藏捲動條維持極簡 */
+    }
+    .nav-links a {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+    }
+    .nav-btn a {
+      padding: 6px 14px;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+    }
+
+    /* 調整首頁首圖文字字級，避免字體過大折行或遮擋 */
+    #text-box {
+      padding: 0 8vw;
+    }
+    #scene-label {
+      font-size: 14px;
+      letter-spacing: 0.25em;
+      margin-bottom: 12px;
+    }
+    #main-text {
+      font-size: clamp(22px, 6vw, 32px);
+      line-height: 1.1;
+    }
+
+    /* 解除手機端 100vh 限制：防範橫式圖片在直式螢幕上下產生大片淺灰空洞 */
+    .page-section {
+      height: auto !important;
+      min-height: auto;
+    }
+    
+    /* 唯獨首頁影片維持 100vh 滿版效果 */
+    #page-home {
+      height: 100vh !important;
+    }
+    #video-container {
+      height: calc(100vh - 60px);
+    }
+    .scene-vid {
+      width: 100vw;
+      height: 100%;
+      object-fit: cover; /* 讓首頁影片在手機上滿版裁切，保留高奢氛圍 */
+    }
+
+    /* 產品介紹頁（Overview, Tech, App）改為隨圖片高度自然延伸（精緻電子雜誌感） */
+    .premium-gray-page {
+      justify-content: center;
+      padding: 60px 0 40px 0; /* 留出上方導覽列與下方的優雅呼吸感間距 */
+    }
+    .image-container {
+      height: auto !important;
+      width: 100vw;
+    }
+    .large-img {
+      width: 100vw;
+      max-width: 100%;
+      height: auto !important;
+      max-height: none !important;
+      object-fit: contain;
+      margin-bottom: 0;
+    }
+  }
 </style>
 </head>
 <body>
@@ -266,7 +345,6 @@ function startAuto() { clearInterval(autoTimer); autoTimer = setInterval(nextSce
 buildDots(); startAuto();
 const s = scenes[0]; document.getElementById('scene-label').textContent = s.label; document.getElementById('main-text').innerHTML = s.main;
 
-/* 🛠️ 修改點擊事件監聽：移除了對 .bottom-right-home-box 的無效判定，維持其他頁面正常運作 */
 document.addEventListener('click', e => { 
   if (e.target.closest('.navbar')) return; 
   if (e.target.closest('#page-overview')) return; 
