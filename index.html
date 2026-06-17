@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Avant-Garde Experience - Home</title>
+<title>Avant-Garde Experience</title>
 <style>
   /* ── 基礎全域設定 ── */
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -51,7 +51,7 @@
     object-fit: contain; 
   }
 
-  /* ── 頂部高奢懸浮導覽列 ── */
+  /* ── 頂部高奢懸浮導覽列（桌機版樣式） ── */
   .navbar {
     position: fixed; top: 0; left: 0; width: 100vw;
     height: 60px; 
@@ -138,11 +138,43 @@
     transition: opacity 0.4s ease, transform 0.4s ease;
   }
 
+  /* ── 通用優雅淺灰色分頁樣式（桌機版） ── */
+  .premium-gray-page {
+    background-color: #f3f3f4; 
+    z-index: 9; 
+    display: flex;
+    flex-direction: column;   
+    align-items: center;
+    justify-content: flex-end; 
+  }
+
+  /* 桌機版預設隱藏手機版的名稱頭 */
+  .mobile-section-title {
+    display: none;
+  }
+
+  .image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: calc(100vh - 60px); 
+  }
+
+  .large-img {
+    max-width: 98%;  
+    max-height: calc(100vh - 90px); 
+    object-fit: contain; 
+    display: block;
+    margin-bottom: 20px; 
+  }
+
   #progress { display: none !important; }
 
-  /* ── 📱 手機版專用響應式樣式 ── */
+  /* ── 📱 手機版專用響應式樣式（完美的「標題保險桿」一頁式架構） ── */
   @media (max-width: 768px) {
     .navbar {
+      position: fixed !important; /* 確保控制台永遠固定在最上方 */
       padding: 0 3vw;
       justify-content: space-between;
     }
@@ -181,12 +213,19 @@
       line-height: 1.1;
     }
 
+    /* 🌟 核心：高度放行由內容撐開，回歸緊湊排版 */
     .page-section {
       height: auto !important;
       min-height: auto !important;
       overflow: visible !important;
     }
 
+    /* 🌟 核心保險錨點：點擊按鈕時，純文字標題會精準在 Bar 下方多留出空間排隊 */
+    #page-overview, #page-tech, #page-app {
+      scroll-margin-top: 65px !important;
+    }
+
+    /* 首頁影片結構 */
     #page-home {
       padding-top: 60px;
     }
@@ -201,10 +240,43 @@
       height: auto !important;
       object-fit: contain !important;
     }
+    /* 確保大字死死鎖在影片上 */
     #overlay {
       position: absolute !important;
       top: 60px !important;
       height: calc(100vw * 9 / 16) !important;
+    }
+
+    /* 🌟 核心：手機版放行顯示「微奢華純文字名稱頭」 */
+    .mobile-section-title {
+      display: block !important;
+      width: 100vw;
+      padding: 30px 6vw 10px 6vw; /* 上方留出舒服的呼吸空間 */
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      color: rgba(2, 6, 23, 0.4); /* 優雅的高級感半透明灰 */
+      text-transform: uppercase;
+      background-color: #f3f3f4;
+      text-align: left;
+    }
+
+    /* 圖片緊咬在標題下方 */
+    .premium-gray-page {
+      display: block !important;
+      padding: 0 !important;
+    }
+    .image-container {
+      width: 100vw !important;
+      height: auto !important;
+      display: block !important;
+    }
+    .large-img {
+      width: 100vw !important;
+      height: auto !important;
+      display: block !important;
+      margin-bottom: 0 !important;
+      object-fit: contain !important;
     }
   }
 </style>
@@ -213,10 +285,10 @@
 
 <nav id="top-navbar" class="navbar">
   <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="overview.html">Overview</a></li>
-    <li><a href="tech.html">Technology</a></li>
-    <li><a href="app.html">App</a></li>
+    <li><a href="#page-home">Home</a></li>
+    <li><a href="#page-overview">Overview</a></li>
+    <li><a href="#page-tech">Technology</a></li>
+    <li><a href="#page-app">App</a></li>
     <li><a href="#">Support</a></li>
   </ul>
   <div class="nav-btn">
@@ -234,6 +306,24 @@
       <div id="scene-label">AI ANALYSIS</div>
       <div id="main-text">PERSONALIZED CARE<br>POWERED BY AI</div>
     </div>
+  </div>
+</section>
+
+<section id="page-overview" class="page-section premium-gray-page">
+  <div class="mobile-section-title">Overview</div> <div class="image-container">
+    <img src="overview1.png" alt="Overview" class="large-img">
+  </div>
+</section>
+
+<section id="page-tech" class="page-section premium-gray-page">
+  <div class="mobile-section-title">Technology</div> <div class="image-container">
+    <img src="tec.png" alt="Technology" class="large-img">
+  </div>
+</section>
+
+<section id="page-app" class="page-section premium-gray-page">
+  <div class="mobile-section-title">App Experience</div> <div class="image-container">
+    <img src="app.png" alt="App Experience" class="large-img">
   </div>
 </section>
 
@@ -256,13 +346,6 @@ videoEl.addEventListener('ended', function() {
   videoEl.currentTime = videoEl.duration; 
   clearInterval(autoTimer); 
 });
-
-function buildDots() {
-  const prog = document.getElementById('progress'); prog.innerHTML = '';
-  scenes.forEach((_, i) => { 
-    const d = document.createElement('div'); d.className = 'dot' + (i === currentScene ? ' active' : ''); d.onclick = () => goToScene(i); prog.appendChild(d); 
-  });
-}
 
 function goToScene(idx) {
   if (transitioning) return; transitioning = true;
@@ -291,7 +374,7 @@ function startAuto() { clearInterval(autoTimer); autoTimer = setInterval(nextSce
 
 startAuto();
 
-// 只有點擊影片區域才會切換文字，絕不干涉其他地方
+/* ── 🛠️ 只有點擊首頁「影片範圍內」才會觸發換字，其餘滾動與手滑絕不干涉 ── */
 document.getElementById('page-home').addEventListener('click', e => { 
   if (e.target.closest('.navbar')) return; 
   clearInterval(autoTimer); 
