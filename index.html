@@ -146,7 +146,6 @@
     flex-direction: column;   
     align-items: center;
     justify-content: flex-end; 
-    scroll-margin-top: 60px;
   }
 
   .image-container {
@@ -225,10 +224,14 @@
       height: auto !important;
       object-fit: contain !important;
     }
+    
+    /* 🛠️ 關鍵修正一：解除手機版輪播容器的絕對定位，轉為隨內容推擠的靜態區塊，防止高度拉扯衝突 */
     #overlay {
-      position: absolute !important;
-      top: 60px !important;
-      height: calc(100vw * 9 / 16) !important;
+      position: relative !important;
+      top: 0 !important;
+      height: auto !important;
+      padding: 30px 0 !important;
+      display: flex !important;
     }
 
     .premium-gray-page {
@@ -248,15 +251,15 @@
       object-fit: contain;
     }
 
-    /* ── 📱 手機版專屬精密錨點定位（精準停在兩頁交界、留出兩行舒適空間） ── */
+    /* 🛠️ 關鍵修正二：重新精準計算「各圖片交界線自動卡在 Bar 下方且多留兩行」的滾動定位邊距 */
     #page-overview {
-      scroll-margin-top: 75px !important;
+      scroll-margin-top: 90px !important; 
     }
     #page-tech {
-      scroll-margin-top: 75px !important;
+      scroll-margin-top: 105px !important; 
     }
     #page-app {
-      scroll-margin-top: 75px !important;
+      scroll-margin-top: 105px !important;  
     }
   }
 </style>
@@ -359,7 +362,7 @@ function startAuto() { clearInterval(autoTimer); autoTimer = setInterval(nextSce
 buildDots(); startAuto();
 const s = scenes[0]; document.getElementById('scene-label').textContent = s.label; document.getElementById('main-text').innerHTML = s.main;
 
-/* ── 🛠️ 核心修復：強化排除條件，當點擊整個導覽列區塊時，徹底禁止 JS 執行干擾動作 ── */
+/* ── 🛠️ 關鍵修正三：全面封鎖手機版 Navbar 對點擊事件的任何干擾，防範定位吸附衝突 ── */
 document.addEventListener('click', e => { 
   if (e.target.closest('.navbar') || e.target.closest('#top-navbar')) return; 
   if (e.target.closest('#page-overview')) return; 
