@@ -51,14 +51,14 @@
     object-fit: contain; 
   }
 
-  /* ── 頂部高奢懸浮導覽列（預設：首頁黑字版） ── */
+  /* ── 頂部高奢懸浮導覽列（桌機預設：永遠維持這個黑字高奢狀態） ── */
   .navbar {
     position: fixed; top: 0; left: 0; width: 100vw;
     height: 60px; 
     padding: 0 5vw; z-index: 100;
     display: flex; align-items: center; justify-content: flex-end; 
     background: transparent; 
-    transition: all 0.4s ease; /* 讓反白切換時有優雅的漸變效果 */
+    transition: all 0.4s ease;
   }
 
   .nav-links {
@@ -93,22 +93,6 @@
   }
 
   .nav-btn a:hover { background: #020617; color: #fff; }
-
-  /* ── 🌟 當進入其他頁面時，啟動「反白模式」CSS ── */
-  .navbar.nav-inverse .nav-links a {
-    color: rgba(255, 255, 255, 0.6); /* 變成半透明白 */
-  }
-  .navbar.nav-inverse .nav-links a:hover {
-    color: #ffffff; /* 懸浮變成純白 */
-  }
-  .navbar.nav-inverse .nav-btn a {
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-  }
-  .navbar.nav-inverse .nav-btn a:hover {
-    background: #ffffff;
-    color: #020617;
-  }
   
   /* ── 第一頁輪播文字容器 ── */
   #overlay {
@@ -191,7 +175,7 @@
 
   #progress { display: none !important; }
 
-  /* ── 📱 手機版專用響應式樣式 ── */
+  /* ── 📱 手機版專用響應式樣式（桌機防線建立於此） ── */
   @media (max-width: 768px) {
     .navbar {
       position: fixed !important; 
@@ -220,6 +204,22 @@
       letter-spacing: 0.02em;
     }
 
+    /* 🛠️ 關鍵移入：把反白模式的 CSS 關進手機專用盒子裡！這樣桌機永遠碰不到這條規則 */
+    .navbar.nav-inverse .nav-links a {
+      color: rgba(255, 255, 255, 0.6) !important; 
+    }
+    .navbar.nav-inverse .nav-links a:hover {
+      color: #ffffff !important; 
+    }
+    .navbar.nav-inverse .nav-btn a {
+      color: #ffffff !important;
+      border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    }
+    .navbar.nav-inverse .nav-btn a:hover {
+      background: #ffffff !important;
+      color: #020617 !important;
+    }
+
     #text-box {
       padding: 0 6vw;
     }
@@ -239,7 +239,6 @@
       overflow: visible !important;
     }
 
-    /* 點擊按鈕時的原生對齊滾動邊距 */
     #page-overview, #page-tech, #page-app {
       scroll-margin-top: 65px !important;
     }
@@ -277,7 +276,6 @@
       text-align: left;
     }
 
-    /* 在手機反白模式下，讓手機版標題字稍微亮一點，與反白控制列呼應 */
     .navbar.nav-inverse ~ #page-overview .mobile-section-title,
     .navbar.nav-inverse ~ #page-tech .mobile-section-title,
     .navbar.nav-inverse ~ #page-app .mobile-section-title {
@@ -301,7 +299,6 @@
       object-fit: contain !important;
     }
 
-    /* 萬能終點緩衝道：撐出 60% 螢幕高度的隱形空間 */
     .mobile-terminal-spacer {
       display: block !important;
       width: 100vw;
@@ -365,28 +362,32 @@
 <div id="progress"></div>
 
 <script>
-/* ── 🌟 核心修正：控制導覽列反白的邏輯 ── */
 function setNavbarInverse(isInverse) {
+  // 🛠️ 增加安全鎖：只有在手機寬度下才執行變色，桌機直接無視這條 JS 指令
+  if (window.innerWidth > 768) return; 
+  
   const navbar = document.getElementById('top-navbar');
   if (isInverse) {
-    navbar.classList.add('nav-inverse'); // 變白色
+    navbar.classList.add('nav-inverse'); 
   } else {
-    navbar.classList.remove('nav-inverse'); // 恢復黑色
+    navbar.classList.remove('nav-inverse'); 
   }
 }
 
-// 🛠️ 監聽手滑滾動：拉高防線到 180 像素，徹底解決 Home -> Overview 的熄燈衝突
 window.addEventListener('scroll', () => {
+  // 🛠️ 增加安全鎖：如果是桌機螢幕滾動，直接跳出，絕不准碰顏色
+  if (window.innerWidth > 768) return; 
+
   const scrollTop = window.scrollY || document.documentElement.scrollTop;
   if (scrollTop < 180) {
-    setNavbarInverse(false); // 在首頁影片範圍內，維持原本黑字
+    setNavbarInverse(false); 
   } else {
-    setNavbarInverse(true);  // 一旦滑出首頁，全面強制反白 (白色)
+    setNavbarInverse(true);  
   }
 });
 
 
-/* ── 控制影片大字輪播的乾淨腳本 ── */
+/* ── 影片輪播大字腳本 ── */
 const scenes = [
   { label: "AI ANALYSIS", main: "PERSONALIZED CARE<br>POWERED BY AI" },
   { label: "TIGHTENING", main: "LIFT AND FIRM<br>GLOW EVERY DAY" },
