@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Avant-Garde Experience · Ver 5.98 (Mobile Layout Fixed)</title>
+<title>Avant-Garde Experience · Ver 5.99 (Contain to Cover Fixed)</title>
 <style>
   /* ── 基礎全域設定 ── */
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -165,14 +165,12 @@
 
   #progress { display: none !important; }
 
-  /* ── 📱 手機版強效響應式 RWD 補救樣式（對齊比例、消滅死白） ── */
+  /* ── 📱 手機版專用響應式樣式（真正的中間不留白解法） ── */
   @media (max-width: 768px) {
-    /* 導覽列極簡橫向滑動 + 微調底色防止跟上方文字撞色 */
+    /* 導覽列極簡流暢化 */
     .navbar {
       padding: 0 4vw;
       justify-content: space-between;
-      background: rgba(243, 243, 244, 0.85) !important; /* 加上半透明微底色，確保文字清晰 */
-      backdrop-filter: blur(10px);
     }
     .nav-links {
       position: static !important;
@@ -180,7 +178,7 @@
       gap: 15px;
       overflow-x: auto;
       white-space: nowrap;
-      max-width: 62vw;
+      max-width: 65vw;
       padding-bottom: 4px;
     }
     .nav-links::-webkit-scrollbar {
@@ -191,74 +189,71 @@
       letter-spacing: 0.15em;
     }
     .nav-btn a {
-      padding: 6px 12px;
+      padding: 6px 14px;
       font-size: 11px;
       letter-spacing: 0.1em;
     }
 
-    /* 🛠️ 手機版高度重定位：首頁與後續產品頁全部依比例自然緊湊排列 */
-    .page-section {
-      height: auto !important;
-      min-height: auto !important;
-      overflow: visible !important;
+    /* 調整首頁文字字級 */
+    #text-box {
+      padding: 0 8vw;
+    }
+    #scene-label {
+      font-size: 14px;
+      letter-spacing: 0.25em;
+      margin-bottom: 12px;
+    }
+    #main-text {
+      font-size: clamp(22px, 6vw, 32px);
+      line-height: 1.1;
     }
 
-    /* 首頁影片區塊與高度精確控制 */
-    #page-home {
-      padding-top: 60px; /* 留出導覽列高度 */
-      height: calc(100vw * 9 / 16) !important; /* 強制首頁區塊高度完全等於 16:9 影片高度，絕不留白！ */
+    /* 🌟 重點：手機版「維持」一頁滿版 100vh 結構 */
+    .page-section {
+      width: 100vw !important;
+      height: 100vh !important;
+      overflow: hidden !important;
     }
+
+    /* 首頁影片與容器強制滿版 */
     #video-container {
       position: absolute !important;
       top: 0 !important;
       left: 0 !important;
       width: 100vw !important;
-      height: 100% !important;
+      height: 100vh !important;
     }
     .scene-vid {
       width: 100vw !important;
-      height: 100% !important;
-      object-fit: contain !important;
+      height: 100vh !important;
+      max-width: none !important;
+      max-height: none !important;
+      object-fit: cover !important; /* 滿版裁切左右，消滅上下大空白 */
     }
-
-    /* 🛠️ 重疊文字容器修正：精確覆蓋在 16:9 影片上，拿掉多餘的 100vh 高度推擠 */
     #overlay {
-      position: absolute !important;
       top: 0 !important;
-      left: 0 !important;
-      width: 100% !important;
-      height: 100% !important;
-      justify-content: center !important;
-    }
-    #text-box {
-      padding: 0 6vw !important;
-    }
-    #scene-label {
-      font-size: 12px !important;
-      letter-spacing: 0.2em !important;
-      margin-bottom: 6px !important;
-    }
-    #main-text {
-      font-size: clamp(16px, 5.5vw, 26px) !important;
-      line-height: 1.1 !important;
+      height: 100vh !important;
     }
 
-    /* 產品介紹頁（Overview, Tech, App）：完全移除 flex 底部推擠，讓圖片緊密相連 */
+    /* 🌟 後續產品介紹頁（Overview, Tech, App）消滅大空白核心 🌟 */
     .premium-gray-page {
-      display: block !important;
-      padding: 0 !important; 
+      justify-content: center !important;
     }
     .image-container {
       width: 100vw !important;
-      height: auto !important;
-      display: block !important;
+      height: 100vh !important; /* 讓圖片容器佔滿整頁 */
     }
     .large-img {
       width: 100vw !important;
-      max-width: 100% !important;
-      height: auto !important;
-      display: block !important;
+      height: 100vh !important; /* 讓圖片本身也高度頂天立地 */
+      max-width: none !important;
+      max-height: none !important;
       margin-bottom: 0 !important;
+      
+      /* 🛠️ 關鍵字：從 contain 改為 cover！
+         這會強迫圖片放大並撐滿整個手機螢幕的高度，原本上下的奇怪灰色大空白會一滴不剩地全部被填滿！ */
+      object-fit: cover !important; 
+      object-position: center center; /* 確保產品主體維持在手機畫面正中央 */
     }
   }
 </style>
@@ -274,7 +269,7 @@
     <li><a href="#">Support</a></li>
   </ul>
   <div class="nav-btn">
-    <a href="#">Buy Now</a>
+    <a href="#">測試更新111</a>
   </div>
 </nav>
 
