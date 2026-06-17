@@ -17,257 +17,108 @@
     overflow-x: hidden; 
     font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif; 
   }
-  
-  .page-section {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
+
+  /* ── 💻 桌機版專用樣式（只在螢幕大於 768px 時生效） ── */
+  @media (min-width: 769px) {
+    /* 讓手機版的專屬圖片容器在桌機上完全消失 */
+    .mobile-only-view { display: none !important; }
+
+    .page-section {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+    #page-home { background-color: #f3f3f4; z-index: 10; }
+    #video-container {
+      position: absolute; top: 60px; left: 0; width: 100vw; height: calc(100vh - 60px); 
+      z-index: 5; pointer-events: none; display: flex; align-items: center; justify-content: center;
+    }
+    .scene-vid { max-width: 100%; max-height: 100%; display: block; object-fit: contain; }
+    
+    .navbar {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 60px; 
+      padding: 0 5vw; z-index: 100; display: flex; align-items: center; justify-content: flex-end; background: transparent; 
+    }
+    .nav-links { position: absolute; left: 50%; transform: translateX(-50%); display: flex; gap: 40px; list-style: none; }
+    .nav-links a { color: rgba(2, 6, 23, 0.7); text-decoration: none; font-size: 14px; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; transition: color 0.3s ease; }
+    .nav-links a:hover { color: #020617; }
+    .nav-btn a { color: #020617; text-decoration: none; font-size: 12px; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; border: 1px solid rgba(2, 6, 23, 0.4); padding: 10px 24px; border-radius: 4px; transition: all 0.3s ease; background: transparent; }
+    .nav-btn a:hover { background: #020617; color: #fff; }
+    
+    #overlay { position: absolute; top: 60px; left: 0; width: 100%; height: calc(100vh - 60px); z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; }
+    #text-box { width: 100%; max-width: 1400px; padding: 0 1vw; display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; background: transparent; }
+    #scene-label { font-size: 20px; letter-spacing: 0.4em; text-transform: uppercase; color: rgba(255, 255, 255, 0.6); margin-bottom: 20px; margin-left: 2px; transition: opacity 0.4s ease; display: block; text-align: left; }
+    #main-text { font-size: clamp(30px, 4.5vw, 64px); font-weight: 900; color: #a5a6a8; line-height: 0.95; letter-spacing: -0.04em; text-transform: uppercase; text-align: left; transition: opacity 0.4s ease, transform 0.4s ease; }
+    
+    .premium-gray-page { background-color: #f3f3f4; z-index: 9; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
+    .image-container { display: flex; align-items: center; justify-content: center; width: 100vw; height: calc(100vh - 60px); }
+    .large-img { max-width: 98%; max-height: calc(100vh - 90px); object-fit: contain; display: block; margin-bottom: 20px; }
   }
 
-  /* ── 第一頁：影片首頁 ── */
-  #page-home {
-    background-color: #f3f3f4; 
-    z-index: 10;
-  }
+  /* ── 📱 手機版專用樣式（只在螢幕小於 768px 時生效） ── */
+  @media (max-width: 768px) {
+    /* 讓桌機版的複雜 Section 在手機上完全隱藏消失 */
+    .desktop-only-view { display: none !important; }
 
-  #video-container {
-    position: absolute; 
-    top: 60px; 
-    left: 0; 
-    width: 100vw; 
-    height: calc(100vh - 60px); 
-    z-index: 5; 
-    pointer-events: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .scene-vid {
-    max-width: 100%; 
-    max-height: 100%; 
-    display: block;
-    object-fit: contain; 
-  }
+    /* 🛠️ 讓手機版的 Bar 變成最純粹的普通上方排隊區塊（Static），絕對不懸浮、不遮擋任何內容 */
+    .navbar {
+      position: relative !important;
+      width: 100vw;
+      height: 60px;
+      padding: 0 3vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #f3f3f4;
+    }
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      list-style: none;
+      overflow-x: auto;
+      white-space: nowrap;
+      max-width: 70vw;
+      padding-bottom: 4px;
+    }
+    .nav-links::-webkit-scrollbar { display: none; }
+    .nav-links a { color: rgba(2, 6, 23, 0.7); text-decoration: none; font-size: 10px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+    .nav-btn a { color: #020617; text-decoration: none; font-size: 10px; font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; border: 1px solid rgba(2, 6, 23, 0.4); padding: 6px 8px; border-radius: 4px; }
 
-  /* ── 頂部高奢懸浮導覽列 ── */
-  .navbar {
-    position: fixed; top: 0; left: 0; width: 100vw;
-    height: 60px; 
-    padding: 0 5vw; z-index: 100;
-    display: flex; align-items: center; justify-content: flex-end; 
-    background: transparent; 
-  }
+    /* 手機版影片首頁排版 */
+    #page-home-mob { width: 100vw; background: #f3f3f4; }
+    .video-container-mob { width: 100vw; height: auto; }
+    .scene-vid-mob { width: 100vw; height: auto; display: block; object-fit: contain; }
+    
+    .overlay-mob { width: 100vw; padding: 25px 6vw; background: #f3f3f4; }
+    .scene-label-mob { font-size: 12px; letter-spacing: 0.2em; color: #a5a6a8; margin-bottom: 6px; text-transform: uppercase; }
+    .main-text-mob { font-size: 22px; font-weight: 900; color: #020617; line-height: 1.1; text-transform: uppercase; }
 
-  .nav-links {
-    display: flex; gap: 40px; list-style: none;
-    position: absolute; left: 50%; transform: translateX(-50%); 
-  }
-
-  .nav-links a {
-    color: rgba(2, 6, 23, 0.7); 
-    text-decoration: none;
-    font-size: 14px;         
-    font-weight: 600;        
-    letter-spacing: 0.3em;   
-    text-transform: uppercase; 
-    transition: color 0.3s ease;
-  }
-
-  .nav-links a:hover { color: #020617; }
-
-  .nav-btn a {
-    color: #020617; 
-    text-decoration: none;
-    font-size: 12px;         
-    font-weight: 600; 
-    letter-spacing: 0.25em; 
-    text-transform: uppercase;
-    border: 1px solid rgba(2, 6, 23, 0.4); 
-    padding: 10px 24px;       
-    border-radius: 4px; 
-    transition: all 0.3s ease;
-    background: transparent;
-  }
-
-  .nav-btn a:hover { background: #020617; color: #fff; }
-  
-  /* ── 第一頁輪播文字容器 ── */
-  #overlay {
-    position: absolute; top: 60px; left: 0; width: 100%; height: calc(100vh - 60px);
-    z-index: 10; 
-    display: flex; 
-    flex-direction: column;
-    align-items: center;     
-    justify-content: center; 
-    pointer-events: none;
-  }
-  
-  /* 文字保險箱 */
-  #text-box {
-    width: 100%;
-    max-width: 1400px; 
-    padding: 0 1vw;    
-    display: flex;
-    flex-direction: column;   
-    justify-content: flex-start; 
-    align-items: flex-start;   
-    background: transparent;   
-  }
-
-  #scene-label {
-    font-size: 20px; 
-    letter-spacing: 0.4em; text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.6); 
-    margin-bottom: 20px; 
-    margin-left: 2px; 
-    transition: opacity 0.4s ease;
-    display: block;
-    text-align: left;    
-  }
-  
-  #main-text {
-    font-size: clamp(30px, 4.5vw, 64px); 
-    font-weight: 900; 
-    color: #a5a6a8; 
-    line-height: 0.95;
-    letter-spacing: -0.04em; 
-    text-transform: uppercase;
-    text-align: left; 
-    transition: opacity 0.4s ease, transform 0.4s ease;
-  }
-
-  /* ── 通用優雅淺灰色分頁樣式 ── */
-  .premium-gray-page {
-    background-color: #f3f3f4; 
-    z-index: 9; 
-    display: flex;
-    flex-direction: column;   
-    align-items: center;
-    justify-content: flex-end; 
-  }
-
-  .image-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100vw;
-    height: calc(100vh - 60px); 
-  }
-
-  .large-img {
-    max-width: 98%;  
-    max-height: calc(100vh - 90px); 
-    object-fit: contain; 
-    display: block;
-    margin-bottom: 20px; 
+    /* 🛠️ 手機版圖片完全回歸最單純的相簿型態：緊湊排隊、高度隨圖片延伸、只在上方留出一行（25px）的呼吸空間 */
+    .mobile-img-section {
+      width: 100vw;
+      background-color: #f3f3f4;
+      padding-top: 25px; /* 👈 這裡就是你說的「在最上方接著需要的圖片，並留出一行舒服的灰色空間」 */
+    }
+    .mobile-img-section img {
+      width: 100vw;
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }
   }
 
   #progress { display: none !important; }
-
-  /* ── 📱 手機版專用響應式樣式 ── */
-  @media (max-width: 768px) {
-    .navbar {
-      position: fixed !important;
-      top: 0 !important; left: 0 !important; width: 100vw !important; height: 60px !important;
-      padding: 0 3vw;
-      justify-content: space-between;
-    }
-    .nav-links {
-      position: static !important;
-      transform: none !important;
-      gap: 8px;
-      overflow-x: auto;
-      white-space: nowrap;
-      max-width: 70vw !important; 
-      padding-bottom: 4px;
-    }
-    .nav-links::-webkit-scrollbar {
-      display: none;
-    }
-    .nav-links a {
-      font-size: 10px;
-      letter-spacing: 0.04em;
-    }
-    .nav-btn a {
-      padding: 6px 8px;
-      font-size: 10px;
-      letter-spacing: 0.02em;
-    }
-
-    #text-box {
-      padding: 0 6vw;
-    }
-    #scene-label {
-      font-size: 12px;
-      letter-spacing: 0.2em;
-      margin-bottom: 10px;
-    }
-    #main-text {
-      font-size: clamp(18px, 5vw, 26px);
-      line-height: 1.1;
-    }
-
-    /* 🌟 修正點一：解除 100vh 的空洞限制，改回 auto 緊湊排版！但強制補上 min-height 撐開地基，防止瀏覽器認錯頁面 */
-    .page-section {
-      height: auto !important;
-      min-height: 400px !important; 
-      overflow: visible !important;
-    }
-
-    /* 🌟 修正點二：專屬手機版的滑動補償距離，扣除 Bar 的 60px */
-    #page-home, #page-overview, #page-tech, #page-app {
-      scroll-margin-top: 60px !important;
-    }
-
-    #page-home {
-      padding-top: 60px;
-    }
-    #video-container {
-      position: relative !important;
-      top: 0 !important;
-      width: 100vw !important;
-      height: auto !important;
-    }
-    .scene-vid {
-      width: 100vw !important;
-      height: auto !important;
-      object-fit: contain !important;
-    }
-    #overlay {
-      position: absolute !important;
-      top: 60px !important;
-      height: calc(100vw * 9 / 16) !important;
-    }
-
-    .premium-gray-page {
-      display: block !important;
-      padding: 0 !important;
-    }
-    .image-container {
-      width: 100vw !important;
-      height: auto !important;
-      display: block !important;
-    }
-    .large-img {
-      width: 100vw !important;
-      height: auto !important;
-      display: block !important;
-      margin-bottom: 0 !important;
-      object-fit: contain !important;
-    }
-  }
 </style>
 </head>
 <body>
 
 <nav id="top-navbar" class="navbar">
   <ul class="nav-links">
-    <li><a href="#page-home">Home</a></li>
-    <li><a href="#page-overview">Overview</a></li>
-    <li><a href="#page-tech">Technology</a></li>
-    <li><a href="#page-app">App</a></li>
+    <li><a href="#page-home-root">Home</a></li>
+    <li><a href="#page-overview-mob">Overview</a></li>
+    <li><a href="#page-tech-mob">Technology</a></li>
+    <li><a href="#page-app-mob">App</a></li>
     <li><a href="#">Support</a></li>
   </ul>
   <div class="nav-btn">
@@ -275,36 +126,64 @@
   </div>
 </nav>
 
-<section id="page-home" class="page-section">
-  <div id="video-container">
-    <video id="scene-vid" class="scene-vid" autoplay muted playsinline src="video141.mp4"></video>
-  </div>
+<div id="page-home-root"></div>
 
-  <div id="overlay">
-    <div id="text-box">
-      <div id="scene-label">AI ANALYSIS</div>
-      <div id="main-text">PERSONALIZED CARE<br>POWERED BY AI</div>
+<div class="desktop-only-view">
+  <section id="page-home" class="page-section">
+    <div id="video-container">
+      <video id="scene-vid" class="scene-vid" autoplay muted playsinline src="video141.mp4"></video>
+    </div>
+    <div id="overlay">
+      <div id="text-box">
+        <div id="scene-label">AI ANALYSIS</div>
+        <div id="main-text">PERSONALIZED CARE<br>POWERED BY AI</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="page-overview" class="page-section premium-gray-page">
+    <div class="image-container">
+      <img src="overview1.png" alt="Overview" class="large-img">
+    </div>
+  </section>
+
+  <section id="page-tech" class="page-section premium-gray-page">
+    <div class="image-container">
+      <img src="tec.png" alt="Technology" class="large-img">
+    </div>
+  </section>
+
+  <section id="page-app" class="page-section premium-gray-page">
+    <div class="image-container">
+      <img src="app.png" alt="App Experience" class="large-img">
+    </div>
+  </section>
+</div>
+
+
+<div class="mobile-only-view">
+  <div id="page-home-mob">
+    <div class="video-container-mob">
+      <video id="scene-vid-mob" class="scene-vid-mob" autoplay muted playsinline src="video141.mp4"></video>
+    </div>
+    <div class="overlay-mob">
+      <div id="scene-label-mob">AI ANALYSIS</div>
+      <div id="main-text-mob">PERSONALIZED CARE<br>POWERED BY AI</div>
     </div>
   </div>
-</section>
 
-<section id="page-overview" class="page-section premium-gray-page">
-  <div class="image-container">
-    <img src="overview1.png" alt="Overview" class="large-img">
+  <div id="page-overview-mob" class="mobile-img-section">
+    <img src="overview1.png" alt="Overview">
   </div>
-</section>
 
-<section id="page-tech" class="page-section premium-gray-page">
-  <div class="image-container">
-    <img src="tec.png" alt="Technology" class="large-img">
+  <div id="page-tech-mob" class="mobile-img-section">
+    <img src="tec.png" alt="Technology">
   </div>
-</section>
 
-<section id="page-app" class="page-section premium-gray-page">
-  <div class="image-container">
-    <img src="app.png" alt="App Experience" class="large-img">
+  <div id="page-app-mob" class="mobile-img-section">
+    <img src="app.png" alt="App Experience">
   </div>
-</section>
+</div>
 
 <div id="progress"></div>
 
@@ -318,80 +197,79 @@ const scenes = [
 ];
 
 let currentScene = 0; let autoTimer = null; let transitioning = false;
+
+// 桌機輪播
 const videoEl = document.getElementById('scene-vid');
+if(videoEl) {
+  videoEl.addEventListener('ended', function() {
+    videoEl.pause();
+    videoEl.currentTime = videoEl.duration; 
+    clearInterval(autoTimer); 
+  });
+}
 
-videoEl.addEventListener('ended', function() {
-  videoEl.pause();
-  videoEl.currentTime = videoEl.duration; 
-  clearInterval(autoTimer); 
-});
-
-function buildDots() {
-  const prog = document.getElementById('progress'); prog.innerHTML = '';
-  scenes.forEach((_, i) => { 
-    const d = document.createElement('div'); d.className = 'dot' + (i === currentScene ? ' active' : ''); d.onclick = () => goToScene(i); prog.appendChild(d); 
+// 手機輪播
+const videoElMob = document.getElementById('scene-vid-mob');
+if(videoElMob) {
+  videoElMob.addEventListener('ended', function() {
+    videoElMob.pause();
+    videoElMob.currentTime = videoElMob.duration; 
   });
 }
 
 function goToScene(idx) {
   if (transitioning) return; transitioning = true;
-  const label = document.getElementById('scene-label'); const main = document.getElementById('main-text');
-  main.classList.add('fade-out'); label.classList.add('fade-out');
+  
+  // 同步改動桌機與手機的文字
+  const label = document.getElementById('scene-label'); 
+  const main = document.getElementById('main-text');
+  const labelMob = document.getElementById('scene-label-mob'); 
+  const mainMob = document.getElementById('main-text-mob');
+  
+  if(main) main.style.opacity = 0;
+  if(label) label.style.opacity = 0;
   
   setTimeout(() => {
     currentScene = idx; const s = scenes[currentScene];
-    label.textContent = s.label; main.innerHTML = s.main;
-    setTimeout(() => { main.classList.remove('fade-out'); label.classList.remove('fade-out'); buildDots(); transitioning = false; }, 50); 
+    if(label) { label.textContent = s.label; label.style.opacity = 1; }
+    if(main) { main.innerHTML = s.main; main.style.opacity = 1; }
+    if(labelMob) labelMob.textContent = s.label;
+    if(mainMob) mainMob.innerHTML = s.main;
+    transitioning = false;
   }, 400); 
 }
 
 function nextScene() { 
   if (currentScene === scenes.length - 1) {
-    clearInterval(autoTimer);
+    if(window.innerWidth > 768) clearInterval(autoTimer);
     return;
   }
   goToScene(currentScene + 1); 
 }
 
-function startAuto() { clearInterval(autoTimer); autoTimer = setInterval(nextScene, 2000); }
+function startAuto() { 
+  clearInterval(autoTimer); 
+  autoTimer = setInterval(nextScene, 2000); 
+}
 
-buildDots(); startAuto();
-const s = scenes[0]; document.getElementById('scene-label').textContent = s.label; document.getElementById('main-text').innerHTML = s.main;
+if(window.innerWidth > 768) {
+  startAuto();
+} else {
+  // 手機版用最單純的定時器切換文字即可，完全不碰觸任何滾動事件
+  setInterval(nextScene, 2000);
+}
 
+// 桌機點擊空白處切換
 document.addEventListener('click', e => { 
+  if (window.innerWidth <= 768) return; // 手機版完全封鎖這個監聽器，不讓它干擾點擊
   if (e.target.closest('.navbar')) return; 
   if (e.target.closest('#page-overview')) return; 
   if (e.target.closest('#page-tech')) return; 
   if (e.target.closest('#page-app')) return; 
-  if (e.target.classList.contains('dot')) return; 
   clearInterval(autoTimer); 
   nextScene(); 
   startAuto(); 
 });
-
-/* ── 📱 修正過後的精密手機版單獨按鈕點擊補償（加號 + 20 像素，只微調下來一行） ── */
-if (window.innerWidth <= 768) {
-  document.querySelector('a[href="#page-overview"]').addEventListener('click', function(e) {
-    e.preventDefault();
-    const target = document.getElementById('page-overview');
-    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset + 20; 
-    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-  });
-
-  document.querySelector('a[href="#page-tech"]').addEventListener('click', function(e) {
-    e.preventDefault();
-    const target = document.getElementById('page-tech');
-    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset + 20; 
-    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-  });
-
-  document.querySelector('a[href="#page-app"]').addEventListener('click', function(e) {
-    e.preventDefault();
-    const target = document.getElementById('page-app');
-    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset + 20; 
-    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-  });
-}
 </script>
 </body>
 </html>
