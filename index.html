@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Avant-Garde Experience · Ver 5.95 (Home Moved to Navbar)</title>
+<title>Avant-Garde Experience · Ver 5.97 (Architecture Fixed)</title>
 <style>
   /* ── 基礎全域設定 ── */
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -17,40 +17,66 @@
     font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif; 
   }
   
-  .page-section {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
+  /* ── 🖥️ 桌機版專用樣式 (螢幕寬度大於 768px 才生效) ── */
+  @media (min-width: 769px) {
+    .page-section {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+    #video-container {
+      position: absolute; 
+      top: 60px; 
+      left: 0; 
+      width: 100vw; 
+      height: calc(100vh - 60px); 
+      z-index: 5; 
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .scene-vid {
+      max-width: 100%; 
+      max-height: 100%; 
+      display: block;
+      object-fit: contain; 
+    }
+    #overlay {
+      position: absolute; top: 60px; left: 0; width: 100%; height: calc(100vh - 60px);
+      z-index: 10; 
+      display: flex; 
+      flex-direction: column;
+      align-items: center;     
+      justify-content: center; 
+      pointer-events: none;
+    }
+    .premium-gray-page {
+      background-color: #f3f3f4; 
+      z-index: 9; 
+      display: flex;
+      flex-direction: column;   
+      align-items: center;
+      justify-content: flex-end; 
+    }
+    .image-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100vw;
+      height: calc(100vh - 60px); 
+    }
+    .large-img {
+      max-width: 98%;  
+      max-height: calc(100vh - 90px); 
+      object-fit: contain; 
+      display: block;
+      margin-bottom: 20px; 
+    }
   }
 
-  /* ── 第一頁：影片首頁 ── */
-  #page-home {
-    background-color: #f3f3f4; 
-    z-index: 10;
-  }
-
-  #video-container {
-    position: absolute; 
-    top: 60px; 
-    left: 0; 
-    width: 100vw; 
-    height: calc(100vh - 60px); 
-    z-index: 5; 
-    pointer-events: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .scene-vid {
-    max-width: 100%; 
-    max-height: 100%; 
-    display: block;
-    object-fit: contain; 
-  }
-
-  /* ── 頂部高奢懸浮導覽列（全時深色調、純透明） ── */
+  /* ── 通用導覽列基底（桌機模式） ── */
   .navbar {
     position: fixed; top: 0; left: 0; width: 100vw;
     height: 60px; 
@@ -58,12 +84,10 @@
     display: flex; align-items: center; justify-content: flex-end; 
     background: transparent; 
   }
-
   .nav-links {
     display: flex; gap: 40px; list-style: none;
     position: absolute; left: 50%; transform: translateX(-50%); 
   }
-
   .nav-links a {
     color: rgba(2, 6, 23, 0.7); 
     text-decoration: none;
@@ -73,9 +97,7 @@
     text-transform: uppercase; 
     transition: color 0.3s ease;
   }
-
   .nav-links a:hover { color: #020617; }
-
   .nav-btn a {
     color: #020617; 
     text-decoration: none;
@@ -89,21 +111,9 @@
     transition: all 0.3s ease;
     background: transparent;
   }
-
   .nav-btn a:hover { background: #020617; color: #fff; }
-  
-  /* ── 第一頁輪播文字容器 ── */
-  #overlay {
-    position: absolute; top: 60px; left: 0; width: 100%; height: calc(100vh - 60px);
-    z-index: 10; 
-    display: flex; 
-    flex-direction: column;
-    align-items: center;     
-    justify-content: center; 
-    pointer-events: none;
-  }
-  
-  /* 文字保險箱 */
+
+  /* 文字輪播保險箱 */
   #text-box {
     width: 100%;
     max-width: 1400px; 
@@ -114,7 +124,6 @@
     align-items: flex-start;   
     background: transparent;   
   }
-
   #scene-label {
     font-size: 20px; 
     letter-spacing: 0.4em; text-transform: uppercase;
@@ -125,7 +134,6 @@
     display: block;
     text-align: left;    
   }
-  
   #main-text {
     font-size: clamp(30px, 4.5vw, 64px); 
     font-weight: 900; 
@@ -137,37 +145,11 @@
     transition: opacity 0.4s ease, transform 0.4s ease;
   }
 
-  /* ── 通用優雅淺灰色分頁樣式 ── */
-  .premium-gray-page {
-    background-color: #f3f3f4; 
-    z-index: 9; 
-    display: flex;
-    flex-direction: column;   
-    align-items: center;
-    justify-content: flex-end; 
-  }
-
-  .image-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100vw;
-    height: calc(100vh - 60px); 
-  }
-
-  .large-img {
-    max-width: 98%;  
-    max-height: calc(100vh - 90px); 
-    object-fit: contain; 
-    display: block;
-    margin-bottom: 20px; 
-  }
-
   #progress { display: none !important; }
 
-  /* ── 📱 手機版響應式 RWD 補救樣式（緊湊無空檔版） ── */
+  /* ── 📱 手機版專用樣式 (螢幕寬度小於 768px 生效) ── */
   @media (max-width: 768px) {
-    /* 導覽列優化 */
+    /* 導覽列極簡橫向滑動 */
     .navbar {
       padding: 0 4vw;
       justify-content: space-between;
@@ -194,7 +176,7 @@
       letter-spacing: 0.1em;
     }
 
-    /* 調整首頁文字字級 */
+    /* 手機版標題字級優化 */
     #text-box {
       padding: 0 8vw;
     }
@@ -208,59 +190,60 @@
       line-height: 1.1;
     }
 
-    /* 🛠️ 關鍵修正：全面取消手機端的強制 100vh 高度推擠，消滅突兀空白 */
+    /* 🛠️ 徹底摧毀空白核心：在手機版完全拔除 100vh 與 overflow: hidden */
     .page-section {
-      height: auto !important;
-      min-height: auto;
-    }
-    
-    /* 首頁影片與文字容器 */
-    #page-home {
-      height: auto !important;
       position: relative;
-      padding-top: 60px; /* 留出頂部導覽列位置 */
+      width: 100vw;
+      height: auto;
+      overflow: visible;
+    }
+
+    /* 首頁影片區塊自然包裹 */
+    #page-home {
+      padding-top: 60px;
     }
     #video-container {
       position: relative;
       top: 0;
-      left: 0;
       width: 100vw;
       height: auto;
-      z-index: 5;
+      pointer-events: none;
     }
     .scene-vid {
       width: 100vw;
       height: auto;
-      max-width: 100%;
-      max-height: none;
-      object-fit: contain; /* 照你原本喜歡的比例完整顯示，不裁切左右 */
+      display: block;
+      object-fit: contain;
     }
     #overlay {
       position: absolute;
       top: 60px;
       left: 0;
       width: 100%;
-      height: calc(100vw * 9 / 16); /* 根據 16:9 比例精確覆蓋在影片區塊上 */
+      height: calc(100vw * 9 / 16);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
-    /* 後續產品介紹頁（Overview, Tech, App）：移除 flex-end 往下推的拉力，改為垂直置中緊湊排列 */
+    /* 產品介紹頁（Overview, Tech, App）：完全移除桌機版的 flex 推擠與固定高度 */
     .premium-gray-page {
-      justify-content: center !important; 
-      align-items: center !important;
-      padding: 20px 0; /* 縮小上下邊距，不留大段空白 */
+      background-color: #f3f3f4;
+      display: block;
     }
     .image-container {
-      height: auto !important;
       width: 100vw;
-      padding: 0;
+      height: auto;
+      display: block;
     }
     .large-img {
       width: 100vw;
       max-width: 100%;
-      height: auto !important;
-      max-height: none !important;
-      object-fit: contain;
+      height: auto;
+      display: block;
       margin-bottom: 0;
+      object-fit: contain;
     }
   }
 </style>
